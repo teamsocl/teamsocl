@@ -100,6 +100,12 @@ namespace teamsocl
             return true;
         }
 
+        public bool filluserstid(int slot, int tid)
+        {
+
+            return true;
+        }
+
         public int getcurdid()
         {
             int nextDID = 0;
@@ -184,6 +190,65 @@ namespace teamsocl
             catch (Exception e)
             { excepter(e); return false; }
             return exists;
+        }
+
+        public bool jointeamack(int tid, int uid, ref DBvals[] DBUser)
+            // on ACK from the coach, inflate the player on the team, then add the team ID to the player's creds.
+        {
+            
+            
+            DBUser = new DBvals[1];
+
+            cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
+                    ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
+                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + uid, conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    DBUser[0].FName = reader.GetString(0);
+                    DBUser[0].LName = reader.GetString(1);
+                    DBUser[0].NName = reader.GetString(2);
+                    DBUser[0].EMail = reader.GetString(3);
+                    DBUser[0].RNumber = reader.GetInt32(4);
+                    DBUser[0].Admin = reader.GetBoolean(5);
+                    DBUser[0].TID1 = reader.GetInt32(6);
+                    DBUser[0].TID2 = reader.GetInt32(7);
+                    DBUser[0].TID3 = reader.GetInt32(8);
+                    DBUser[0].TID4 = reader.GetInt32(9);
+                    DBUser[0].PhoneNumber = reader.GetInt64(10);
+                }
+
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); return false; }
+            return true;
+        }
+        
+        public bool jointeamreq(int tid, ref int cuid, ref string cname, ref string tname)
+            // takes in the team ID, returns the coache's ID, his first name, and the team's name via REF, bool for SQL error.
+        {
+
+            cmd = new SqlCommand("SELECT [coach_uid],[team_name],[coachf] FROM [dbo]."
+                + "[teams] WHERE [tid] = " + tid, conn);
+            reader = cmd.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    cuid = reader.GetInt16(0);
+                    tname = reader.GetString(1);
+                    cname = reader.GetString(20);
+                }
+                reader.Close();
+            }
+            catch (Exception e)
+            { excepter(e); return false; }
+            return true;
         }
 
         public bool pullentity(ref DBvals[] DBUser, int uid) // NOT USED YET!!!

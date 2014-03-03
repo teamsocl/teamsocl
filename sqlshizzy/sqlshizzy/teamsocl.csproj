@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emailer.cs" />
     <Compile Include="EventHandler.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="SqlOverhead.cs" />
