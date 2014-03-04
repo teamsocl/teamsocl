@@ -473,28 +473,6 @@ namespace teamsocl
             return tcount;
         }
 
-        public bool teamregwrite(int nextTID, string tName, string cFirst, string cLast, int cID)
-        {
-            try
-            {
-                cmd = new SqlCommand("INSERT INTO [dbo].[teams] ([tid],[team_name],[coachf],"
-                    + "[coachl],[coach_uid]) VALUES"
-                    + "(" + nextTID + ",'" + tName + "','" + cFirst + "','" + cLast
-                    + "'," + cID + ")", conn);
-                cmd.ExecuteNonQuery();
-
-                cmd = new SqlCommand("CREATE TABLE [dbo].[z" + tName.ToLower() +
-                    "]([uid] [int] NULL,[first_name] [varchar](15) NULL," +
-                    "[last_name] [varchar](15) NULL,[roster_num] [int] NULL," +
-                    "[nickname] [varchar](15) NULL,[phone] [bigint] NULL,[email]" +
-                    "[varchar](35) NULL,[privacy] [bit] NULL)", conn);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            { excepter(e); return false; }
-            return true;
-        }
-
         public bool teamusersdata(ref DBvals[] DBUser, int[] uids)
         {
             foreach (int uid in uids)

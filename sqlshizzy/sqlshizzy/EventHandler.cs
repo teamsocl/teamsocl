@@ -412,8 +412,8 @@ namespace teamsocl
 
         static bool teamregister()
         {
-            string tName, cFirst, cLast, ceMail;
-            int cID, nextTID = 0;
+            string tName, ceMail;
+            int nextTID = 0;
             double cPhone;
 
             Console.Clear();
@@ -430,10 +430,7 @@ namespace teamsocl
                 Console.Write("\n\nTeam name: ");
                 tName = Console.ReadLine();
 
-                cID = User.UID;
                 cPhone = User.PhoneNumber;
-                cFirst = User.FName;
-                cLast = User.LName;
                 ceMail = User.EMail;
 
                 Console.Write("\n\nTeam Color 1: (experimental, not implemented yet");
@@ -441,11 +438,7 @@ namespace teamsocl
                 Console.Write("\n\nTeam Color 1: (experimental, not implemented yet");
 
                 Console.Clear();
-                Console.WriteLine("You have entered the following data:" +
-                    "\n {0}, {1}, {2}, {3}, {4}, {5}" +
-                    "\n\n Is this data correct (y)?", tName, cFirst, cLast, ceMail,
-                    cPhone, cID);
-
+                
                 workingInput.String = Console.ReadLine();
 
                 if (workingInput.String.ToLower() != "y") continue;
@@ -458,7 +451,9 @@ namespace teamsocl
 
                 //Console.WriteLine("You recieved UID {0}!\n", nextUID);
 
-                if (SqlConn.teamregwrite(nextTID, tName, cFirst, cLast, cID)) return true;
+                //if (
+                SqlConn.teamregwrite(nextTID, tName, User.FName, User.LName, User.UID); //== true)
+                //{ return true; }
                 break;
 
             }
