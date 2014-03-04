@@ -16,7 +16,7 @@ namespace teamsocl
         public bool resolved;
         public DateTime dtg;
 
-        public Emailer mail = new Emailer;
+        public Emailer mail = new Emailer();
 
         public Message()
         {
@@ -31,7 +31,7 @@ namespace teamsocl
 
         public void teamjoinreq(string cname, string tname)
         {
-            mail.emailer()
+            //mail.emailer()
         }
         public void jointeamack()
         {
