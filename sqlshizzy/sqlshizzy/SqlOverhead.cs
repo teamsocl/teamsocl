@@ -54,6 +54,22 @@ namespace teamsocl
             return true;
         }
 
+        public bool fetchdaemonmessage()  //INCOMPLETE
+        {
+            // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
+            string messagetype = "";
+            switch( messagetype )
+            {
+                case "":
+                    {
+                        break;
+                    }
+            }
+
+
+            return true;
+        }
+
         public void excepter(Exception e)
         {
             Console.WriteLine("ERROR: " + e);
@@ -100,7 +116,7 @@ namespace teamsocl
             return true;
         }
 
-        public bool filluserstid(int slot, int tid)
+        public bool filluserstid(int slot, int tid)  // fills the user's TID slot.
         {
 
             return true;
@@ -228,7 +244,30 @@ namespace teamsocl
             { excepter(e); return false; }
             return true;
         }
-        
+        public bool jointeamplayer(int tid)
+        {
+
+            try
+            {
+                cmd = new SqlCommand("INSERT INTO [dbo].[daemond] (???????"
+                    + "?????????????"
+                    + "??????) VALUES"
+                    + "("//????????
+                    + ",???????)", conn);
+                cmd.ExecuteNonQuery();
+                reader.Close();
+
+                //cmd = new SqlCommand("INSERT INTO [dbo].[security] ([uid],[password],[admin],"
+                //    + "[email],[active]) VALUES"
+                //    + "(" + nextUID + ",'" + passWord + "',1,'" + eMail + "',0)", conn);
+                //cmd.ExecuteNonQuery();
+                //reader.Close();
+            }
+            catch (Exception e)
+            { excepter(e); return false; }
+            return true;
+        }
+
         public bool jointeamreq(int tid, ref int cuid, ref string cname, ref string tname)
             // takes in the team ID, returns the coache's ID, his first name, and the team's name via REF, bool for SQL error.
         {
@@ -315,7 +354,7 @@ namespace teamsocl
             {
                 cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],"
                     + "[action],[message],[resolved]) VALUES (" + nextDID 
-                    + "," + nextUID + ",'REGISTER','rando',1)", conn);
+                    + "," + nextUID + ",'REGISTER','rando',0)", conn);
                 cmd.ExecuteNonQuery();
                 reader.Close();
             }

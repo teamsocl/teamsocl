@@ -112,6 +112,25 @@ namespace teamsocl
             Console.ReadKey();
         }
 
+        public bool catchdaemonmessage()  //INCOMPLETE
+        {
+            // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
+            string messagetype = "";
+            switch( messagetype )
+            {
+                case "1":  //change
+                    {
+                        break;
+                    }
+                case "2":  //change
+                    {
+                        break;
+                    }
+            }
+            return true;
+        }
+
+
         public static bool dashboard(SqlConnection conn)
         {
             do                // Our program once you've logged in successfully
@@ -223,6 +242,11 @@ namespace teamsocl
             return true;
         }*/
 
+        public bool jointeamplayer()
+        {
+            //if (SqlConn.jointeamplayer(int tid) == false) return false;
+            return true;
+        }
         public bool jointeamack(int tid, int uid)
         {
 
@@ -254,8 +278,8 @@ namespace teamsocl
             string tname = "";
 
             if (SqlConn.jointeamreq(tid, ref cuid, ref cname, ref tname) == false) return false ;
-
-
+            
+            // post message to daemond to email coach CUID, include name to format the email to coach
 
 
             return true;

@@ -26,5 +26,18 @@ namespace teamsocl
             this.resolved = false;
             this.dtg = DateTime.Now;
         }
+
+        public void teamjoinreq(string cname, string tname)
+        {
+            // send an email off to the coach, saying that 'uid' wants to join his team 'teamname', personalize with his name.  tell him to login to app to accept.
+        }
+        public void jointeamack()
+        {
+            // send an email off to the player, saying that 'cname' has accepted and you're part of 'teamname'.  He/she will now recieve messages related to this team.
+        }
+        public void newteamevent(string[] players)
+        {
+            // a player's coach has posted a new event, tell everyone on the team about it.  Use a string array full of player's emails on the team to fill out the 'to' column.
+        }
     }
 }
