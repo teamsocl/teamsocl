@@ -135,9 +135,9 @@ namespace teamsocl
 
             try
             {
-                cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],"
+                cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],[tid]"
                     + "[action],[message],[resolved]) VALUES (" + nextDID
-                    + "," + nextUID + ",'REGISTER','rando',0)", conn);
+                    + "," + nextUID + ",0,'REGISTER','rando',0)", conn);
                 cmd.ExecuteNonQuery();
 
             }
@@ -164,7 +164,7 @@ namespace teamsocl
                     "]([uid] [int] NULL,[first_name] [varchar](15) NULL," +
                     "[last_name] [varchar](15) NULL,[roster_num] [int] NULL," +
                     "[nickname] [varchar](15) NULL,[phone] [bigint] NULL,[email]" +
-                    "[varchar](35) NULL,[privacy] [bit] NULL)", conn);
+                    "[varchar](35) NULL,[privacy] [bit] NULL,[approved] [bit] NULL)", conn);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -335,12 +335,10 @@ namespace teamsocl
             return exists;
         }
 
-        public bool jointeamack(ref DBvals[] DBUser)
-            // on ACK from the coach, inflate the player on the team, then add the team ID to the player's creds.
+        public bool jointeamack()
+        // on ACK from the coach, inflate the player on the team, then add the team ID to the player's creds.
         {
-            
-            
-            DBUser = new DBvals[1];
+            DBvals DBUser = new DBvals();
 
             int DID = 0;
             int UID = 0;
@@ -348,7 +346,7 @@ namespace teamsocl
             string message = "";
 
             cmd = new SqlCommand("SELECT TOP 1 [did],[uid],[message]" +
-                    ",[tid] FROM [dbo].[daemond] WHERE [action] = 'TREQUEST' AND [resolved] = 0" + , conn);
+                    ",[tid] FROM [dbo].[daemond] WHERE [action] = 'TREQUEST' AND [resolved] = 0", conn);
             reader = cmd.ExecuteReader();
 
             try
@@ -366,44 +364,112 @@ namespace teamsocl
             catch (Exception e)
             { excepter(e); return false; }
 
-            if (message == @"/APPROVED")
+            if (message != @"/APPROVED")
             {
-                // WRITE UID to TEAM TABLE AND WRITE TEAM NUMBER TO USERS TABLE!!!
+                try
+                {
+                    cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],[tid],[action],[message],[resolved]) VALUES(" + UID
+                        + ",'" + DBUser.FName + "','" + DBUser.LName
+                        + "'," + DBUser.RNumber + ",'" + DBUser.NName
+                        + "'," + DBUser.PhoneNumber + ",'" + DBUser.EMail
+                        + "',0,0,0,0)", conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                { excepter(e); return false; }
+                // mail coach 
             }
             else
             {
                 cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
                     ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
-                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + UID, conn);
+                    ",[phone],[privacy] FROM [dbo].[users] WHERE [uid] = " + UID, conn);
                 reader = cmd.ExecuteReader();
 
                 try
                 {
                     while (reader.Read())
                     {
-                        DBUser[0].FName = reader.GetString(0);
-                        DBUser[0].LName = reader.GetString(1);
-                        DBUser[0].NName = reader.GetString(2);
-                        DBUser[0].EMail = reader.GetString(3);
-                        DBUser[0].RNumber = reader.GetInt32(4);
-                        DBUser[0].Admin = reader.GetBoolean(5);
-                        DBUser[0].TID1 = reader.GetInt32(6);
-                        DBUser[0].TID2 = reader.GetInt32(7);
-                        DBUser[0].TID3 = reader.GetInt32(8);
-                        DBUser[0].TID4 = reader.GetInt32(9);
-                        DBUser[0].PhoneNumber = reader.GetInt64(10);
+                        DBUser.FName = reader.GetString(0);
+                        DBUser.LName = reader.GetString(1);
+                        DBUser.NName = reader.GetString(2);
+                        DBUser.EMail = reader.GetString(3);
+                        DBUser.RNumber = reader.GetInt32(4);
+                        DBUser.Admin = reader.GetBoolean(5);
+                        DBUser.TID1 = reader.GetInt32(6);
+                        DBUser.TID2 = reader.GetInt32(7);
+                        DBUser.TID3 = reader.GetInt32(8);
+                        DBUser.TID4 = reader.GetInt32(9);
+                        DBUser.PhoneNumber = reader.GetInt64(10);
+                        DBUser.Privacy = reader.GetBoolean(11);
                     }
 
-                reader.Close();
+                    reader.Close();
                 }
 
-            catch (Exception e)
-            { excepter(e); return false; }
+                catch (Exception e)
+                { excepter(e); return false; }
+
+                if (DBUser.TID1 == 0)
+                { if (jointeamfilltids(1, TID, UID) == false) return false; }
+                else if (DBUser.TID2 == 0)
+                { if (jointeamfilltids(2, TID, UID) == false) return false; }
+                else if (DBUser.TID3 == 0)
+                { if (jointeamfilltids(3, TID, UID) == false) return false; }
+                else if (DBUser.TID4 == 0)
+                { if (jointeamfilltids(4, TID, UID) == false) return false; }
+                else
+                {
+                    //send mail to coach saying player's aready in too many teams
+                    //send mail to player letting him know he cant join cuz he's full
+                    return false;
+                }
+
+                string tname = tid2name(TID);
+
+                //WRITE DUDE!!!
+                try
+                {
+                    cmd = new SqlCommand("INSERT INTO [dbo].[z" + tname + "] ([uid],"
+                        + "[first_name],[last_name],[roster_num],[nickname],"
+                        + "[phone],[email],[privacy]) VALUES(" + UID
+                        + ",'" + DBUser.FName + "','" + DBUser.LName
+                        + "'," + DBUser.RNumber + ",'" + DBUser.NName
+                        + "'," + DBUser.PhoneNumber + ",'" + DBUser.EMail
+                        + "',0,0,0,0)", conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                { excepter(e); return false; }
+
+                // resolve daemond message
+                try
+                {
+                    cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([resolved]) "
+                        + "VALUES(1) WHERE [did] = " + DID, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                { excepter(e); return false; }
+
 
             }
-            
             return true;
         }
+
+        public bool jointeamfilltids(int slot, int TID, int UID)
+        {
+            try
+                {
+                    cmd = new SqlCommand("INSERT INTO [dbo].[users] ([tids"+slot+"]) VALUES(" + TID
+                        + ") WHERE [uid]="+UID, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                { excepter(e); return false; }
+            return true;
+        }
+
         public bool jointeamplayer(int tid)  // NOT FINISHED
         {
 
@@ -516,7 +582,6 @@ namespace teamsocl
 
             return true;
         }
-
 
         public int teammemcount(string teamname)
         {

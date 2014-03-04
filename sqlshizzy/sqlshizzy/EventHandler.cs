@@ -441,6 +441,10 @@ namespace teamsocl
                 
                 workingInput.String = Console.ReadLine();
 
+                Console.WriteLine("You have entered the following data:" 
+                    + "\n {0}, {1}, {2}\n\n Is this data correct (y)?" 
+                    + "", tName, ceMail,cPhone);
+
                 if (workingInput.String.ToLower() != "y") continue;
 
                 // PULL the next TID available
