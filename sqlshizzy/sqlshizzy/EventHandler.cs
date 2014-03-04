@@ -27,7 +27,7 @@ namespace teamsocl
 
         public enum Event { mail, register, joinrq, joinack, broadcast }
 
-        
+        // event/message handling        
 
         public static void messagehandler(Event ToDo)
         {
@@ -65,6 +65,8 @@ namespace teamsocl
             }
         }
 
+        // LOG-AUTH SECTION - WORKING
+
         public static bool authenticator()  // authentication process
         {
 
@@ -101,188 +103,6 @@ namespace teamsocl
                 return false;
             }
 
-        }
-        
-        public static void connresetter()  // resets the SQL connection
-        {
-            SqlConn.conn.Close();
-            SqlConn.conn.Open();
-
-            Console.WriteLine("Conn reset!");
-            Console.ReadKey();
-        }
-
-        public bool catchdaemonmessage()  //INCOMPLETE
-        {
-            // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
-            string messagetype = "";
-            switch( messagetype )
-            {
-                case "1":  //change
-                    {
-                        break;
-                    }
-                case "2":  //change
-                    {
-                        break;
-                    }
-            }
-            return true;
-        }
-
-
-        public static bool dashboard(SqlConnection conn)
-        {
-            do                // Our program once you've logged in successfully
-            {
-                continueR = false;
-                //
-
-
-                Console.Clear();
-                Console.WriteLine("w Weather \nt New team \ns Show security \nq Quit");
-
-                workingInput.Char(Console.ReadKey());
-
-                switch (workingInput.Char())
-                {
-                    case 'w':
-                        {
-                            Console.WriteLine("current weather is : \n\n " + weather());
-                            Console.ReadKey();
-                            Console.Clear();
-                            continue; ;
-                        }
-                    case 't':
-                        {
-                            teamregister();
-                            continue;
-                        }
-                    case 's':
-                        {
-                            Console.Clear();
-
-                            Console.WriteLine(RunSelectString("SELECT" + " * FROM [dbo].[security]", 4, conn));
-                            Console.ReadKey();
-                            continue;
-                        }
-                    case 'q':
-                        {
-                            switch (quitter())
-                            {
-                                case 1:
-                                    return false;
-                                case 2:
-                                    return true;
-                                case 3:
-                                    continue;
-                                default:
-                                    continue;
-                            }
-                        }
-                    default:
-                        Console.WriteLine("oopse!");
-                        break;
-                }
-
-                switch (quitter())
-                {
-                    case 1:
-                        return false;
-                    case 2:
-                        return true;
-                    case 3:
-                        continue;
-                    default:
-                        continue;
-                }
-
-
-            }
-            while (continueR != true);
-            return true;
-        }  // dashboard for main program after auth/valid
-
-        /*static bool datapull(SqlConnection conn)
-        {
-            cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
-                    ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
-                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + User.UID, conn);
-            reader = cmd.ExecuteReader();
-
-            try
-            {
-                while (reader.Read())
-                {
-                    User.FName = reader.GetString(0);
-                    User.LName = reader.GetString(1);
-                    User.NName = reader.GetString(2);
-                    User.EMail = reader.GetString(3);
-                    User.RNumber = reader.GetInt32(4);
-                    User.Admin = reader.GetBoolean(5);
-                    User.TID1 = reader.GetInt32(6);
-                    User.TID2 = reader.GetInt32(7);
-                    User.TID3 = reader.GetInt32(8);
-                    User.TID4 = reader.GetInt32(9);
-                    User.PhoneNumber = reader.GetInt64(10);
-                }
-
-                reader.Close();
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: " + e);
-                Console.ReadLine();
-
-                Console.WriteLine("Connetion error! please log-in again!");
-                return false;
-            }
-
-            return true;
-        }*/
-
-        public bool jointeamplayer()
-        {
-            //if (SqlConn.jointeamplayer(int tid) == false) return false;
-            return true;
-        }
-        public bool jointeamack(int tid, int uid)
-        {
-
-
-
-            if (User.TID1 == 0)
-            { if (SqlConn.filluserstid(1, tid) == false) return false; }
-            else if (User.TID2 == 0)
-            { if (SqlConn.filluserstid(2, tid) == false) return false; }
-            else if (User.TID3 == 0)
-            { if (SqlConn.filluserstid(3, tid) == false) return false; }
-            else if (User.TID4 == 0)
-            { if (SqlConn.filluserstid(4, tid) == false) return false; }
-            else
-            {
-                //send mail to coach saying player's aready in too many teams
-                //send mail to player letting him know he cant join cuz he's full
-            }
-            
-
-
-            return true;
-        } // NOT FINISHED
-
-        public bool jointeamreq(int tid, int uid) // NOT FINISHED
-        {
-            int cuid = 0;
-            string cname = "";
-            string tname = "";
-
-            if (SqlConn.jointeamreq(tid, ref cuid, ref cname, ref tname) == false) return false ;
-            
-            // post message to daemond to email coach CUID, include name to format the email to coach
-
-
-            return true;
         }
 
         static void login()  // login widget
@@ -332,48 +152,28 @@ namespace teamsocl
             }
             while (true);
         }
-                
-        static bool pullteamtable(int tid) // TEST ME!!!
-        {
-            string teamname = "";
-            int tcount = 0;
-            
-            // Pull team's name via its team ID.
-
-            teamname = SqlConn.tid2name(tid);
-
-            // Pull how many people are on that team via teamname
-
-            tcount = SqlConn.teammemcount(teamname);
-
-            // tcount = SqlConn.teammemcount(SqlConn.tid2name(tid);
-            // Pull each UID on a team and put them into an array
-
-            int[] uids = new int[tcount];
-
-            SqlConn.teamuids(ref uids, teamname, tcount);
-
-            // Pull each set of UID's stuff and put them into the DBUsers array.
-
-            DBUser = new DBvals[tcount];
-
-            SqlConn.teamusersdata(ref DBUser, uids);
-
-            return true;
-
-        }
-
-        static int quitter()  // spash to logout or quit
-        {
-            Console.WriteLine("\n\ndo you want to log out? strike (y) quit? (q)");
-
-            workingInput.Char(Console.ReadKey());
-            if (workingInput.Char() == 'y') return 1;
-            else if (workingInput.Char() == 'q') return 2;
-            else return 3;
-        }
         
-        static void reginflater(string sourcePath) //int uid  (LEXIT!!!)
+        public static void splash()  // splash display for start of program
+        {
+            Console.WriteLine("#######################################################");
+            Console.WriteLine("#        Welcome to Go Team Go Live v 1.0.a           #");
+            Console.WriteLine("#     while using the console version of GTGL,        #");
+            Console.WriteLine("#     'q' entered in any prompt should escape!        #");
+            Console.WriteLine("#         please press (any) key when ready.          #");
+            Console.WriteLine("#######################################################");
+            Console.ReadKey();
+        }
+
+        static bool validator(string dbPassword, string password)  // validates authentication
+        {
+            if (password == "") return false;
+            if (dbPassword == password) return true;                             // password validator widget
+            else return false;
+        }
+
+        // USER REGISTRATION
+
+        static void reginflater(string sourcePath) //int uid 
         {
             //testing
             //int uid;
@@ -383,7 +183,7 @@ namespace teamsocl
 
             string pathToCreate;
             string sourcePathBase;
-            
+
             Random rng = new Random(); rando = rng.Next(1000000, 9999999);
             pathToCreate = sourcePath + rando.ToString() + "\\";
             System.IO.Directory.CreateDirectory(pathToCreate);
@@ -434,7 +234,7 @@ namespace teamsocl
                 }
             }
 
-            System.IO.File.Delete(sourcePathBase+ "insert2.txt");
+            System.IO.File.Delete(sourcePathBase + "insert2.txt");
 
             System.IO.File.Copy(sourcePathBase + fileName1, pathToCreate + fileName1, true);
 
@@ -531,7 +331,7 @@ namespace teamsocl
                 Console.Write("\n\nEmail: ");
                 eMail = Console.ReadLine();
 
-                if (SqlConn.is1in2row3(eMail,"security","email") == true)
+                if (SqlConn.is1in2row3(eMail, "security", "email") == true)
                 {
                     Console.WriteLine("This E-Mail address has already been registered!\n");
                     continue;
@@ -586,7 +386,7 @@ namespace teamsocl
                 while (true);
 
                 // Repull to block collissions if someone else registers at the same time...
-                
+
                 nextUID = SqlConn.getcuruid();
                 nextUID++;
 
@@ -608,16 +408,7 @@ namespace teamsocl
 
         }
 
-        public static void splash()  // splash display for start of program
-        {
-            Console.WriteLine("#######################################################");
-            Console.WriteLine("#        Welcome to Go Team Go Live v 1.0.a           #");
-            Console.WriteLine("#     while using the console version of GTGL,        #");
-            Console.WriteLine("#     'q' entered in any prompt should escape!        #");
-            Console.WriteLine("#         please press (any) key when ready.          #");
-            Console.WriteLine("#######################################################");
-            Console.ReadKey();
-        }
+        // TEAM REGISTRATION - WORKING
 
         static bool teamregister()
         {
@@ -675,12 +466,214 @@ namespace teamsocl
 
             return false;
         }
-        
-        static bool validator(string dbPassword, string password)  // validates authentication
+
+        // USER JOIN TEAM
+
+        public bool jointeamplayer()
         {
-            if (password == "") return false;
-            if (dbPassword == password) return true;                             // password validator widget
-            else return false;
+            //if (SqlConn.jointeamplayer(int tid) == false) return false;
+            return true;
+        }
+
+        public bool jointeamack(int tid, int uid)
+        {
+
+
+
+            if (User.TID1 == 0)
+            { if (SqlConn.filluserstid(1, tid) == false) return false; }
+            else if (User.TID2 == 0)
+            { if (SqlConn.filluserstid(2, tid) == false) return false; }
+            else if (User.TID3 == 0)
+            { if (SqlConn.filluserstid(3, tid) == false) return false; }
+            else if (User.TID4 == 0)
+            { if (SqlConn.filluserstid(4, tid) == false) return false; }
+            else
+            {
+                //send mail to coach saying player's aready in too many teams
+                //send mail to player letting him know he cant join cuz he's full
+            }
+
+
+
+            return true;
+        } // NOT FINISHED
+
+        public bool jointeamreq(int tid, int uid) // NOT FINISHED
+        {
+            int cuid = 0;
+            string cname = "";
+            string tname = "";
+
+            if (SqlConn.jointeamreq(tid, ref cuid, ref cname, ref tname) == false) return false;
+
+            // post message to daemond to email coach CUID, include name to format the email to coach
+
+
+            return true;
+        }
+
+        // CLIENT SIDE MESSAGING
+
+        public bool catchdaemonmessage()  //INCOMPLETE
+        {
+            // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
+            string messagetype = "";
+            switch (messagetype)
+            {
+                case "1":  //change
+                    {
+                        break;
+                    }
+                case "2":  //change
+                    {
+                        break;
+                    }
+            }
+            return true;
+        }
+
+        public bool teamcaster(string message) // NOT FINISHED
+        {
+
+            return true;
+        }
+
+        // SERVER SIDE MESSAGING
+
+        // ADMIN MESSAGING
+
+        public bool broadcaster(string message)  // NOT FINNISHED
+        {
+            // broadcast with TID of 0 into broadcast table
+            return true;
+        }
+
+        // DASHBOARD FEATURES
+
+        public static bool dashboard(SqlConnection conn)
+        {
+            do                // Our program once you've logged in successfully
+            {
+                continueR = false;
+                //
+
+
+                Console.Clear();
+                Console.WriteLine("w Weather \nt New team \ns Show security \nq Quit");
+
+                workingInput.Char(Console.ReadKey());
+
+                switch (workingInput.Char())
+                {
+                    case 'w':
+                        {
+                            Console.WriteLine("current weather is : \n\n " + weather());
+                            Console.ReadKey();
+                            Console.Clear();
+                            continue; ;
+                        }
+                    case 't':
+                        {
+                            teamregister();
+                            continue;
+                        }
+                    case 's':
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine(RunSelectString("SELECT" + " * FROM [dbo].[security]", 4, conn));
+                            Console.ReadKey();
+                            continue;
+                        }
+                    case 'q':
+                        {
+                            switch (quitter())
+                            {
+                                case 1:
+                                    return false;
+                                case 2:
+                                    return true;
+                                case 3:
+                                    continue;
+                                default:
+                                    continue;
+                            }
+                        }
+                    default:
+                        Console.WriteLine("oopse!");
+                        break;
+                }
+
+                switch (quitter())
+                {
+                    case 1:
+                        return false;
+                    case 2:
+                        return true;
+                    case 3:
+                        continue;
+                    default:
+                        continue;
+                }
+
+
+            }
+            while (continueR != true);
+            return true;
+        }  // dashboard for main program after auth/valid
+
+        static bool pullteamtable(int tid) // TEST ME!!!
+        {
+            string teamname = "";
+            int tcount = 0;
+            
+            // Pull team's name via its team ID.
+
+            teamname = SqlConn.tid2name(tid);
+
+            // Pull how many people are on that team via teamname
+
+            tcount = SqlConn.teammemcount(teamname);
+
+            // tcount = SqlConn.teammemcount(SqlConn.tid2name(tid);
+            // Pull each UID on a team and put them into an array
+
+            int[] uids = new int[tcount];
+
+            SqlConn.teamuids(ref uids, teamname, tcount);
+
+            // Pull each set of UID's stuff and put them into the DBUsers array.
+
+            DBUser = new DBvals[tcount];
+
+            SqlConn.teamusersdata(ref DBUser, uids);
+
+            return true;
+
+        }
+
+        // CLEANUP
+
+        static int quitter()  // spash to logout or quit
+        {
+            Console.WriteLine("\n\ndo you want to log out? strike (y) quit? (q)");
+
+            workingInput.Char(Console.ReadKey());
+            if (workingInput.Char() == 'y') return 1;
+            else if (workingInput.Char() == 'q') return 2;
+            else return 3;
+        }
+        
+        // GENERAL FUNCTIONS
+
+        public static void connresetter()  // resets the SQL connection
+        {
+            SqlConn.conn.Close();
+            SqlConn.conn.Open();
+
+            Console.WriteLine("Conn reset!");
+            Console.ReadKey();
         }
 
         static string weather()  // weather function to be implemented in full later
@@ -787,6 +780,46 @@ namespace teamsocl
             }
             return output;
         }  // test only
+
+        /*static bool datapull(SqlConnection conn)
+{
+    cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
+            ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
+            ",[phone] FROM [dbo].[users] WHERE [uid] = " + User.UID, conn);
+    reader = cmd.ExecuteReader();
+
+    try
+    {
+        while (reader.Read())
+        {
+            User.FName = reader.GetString(0);
+            User.LName = reader.GetString(1);
+            User.NName = reader.GetString(2);
+            User.EMail = reader.GetString(3);
+            User.RNumber = reader.GetInt32(4);
+            User.Admin = reader.GetBoolean(5);
+            User.TID1 = reader.GetInt32(6);
+            User.TID2 = reader.GetInt32(7);
+            User.TID3 = reader.GetInt32(8);
+            User.TID4 = reader.GetInt32(9);
+            User.PhoneNumber = reader.GetInt64(10);
+        }
+
+        reader.Close();
+    }
+
+    catch (Exception e)
+    {
+        Console.WriteLine("ERROR: " + e);
+        Console.ReadLine();
+
+        Console.WriteLine("Connetion error! please log-in again!");
+        return false;
+    }
+
+    return true;
+}*/
         
+
     }
 }
