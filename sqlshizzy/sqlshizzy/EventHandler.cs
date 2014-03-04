@@ -27,7 +27,7 @@ namespace teamsocl
 
         public enum Event { mail, register, joinrq, joinack, broadcast }
 
-        // event/message handling        
+        // event/message handling - POOR
 
         public static void messagehandler(Event ToDo)
         {
@@ -65,9 +65,9 @@ namespace teamsocl
             }
         }
 
-        // LOG-AUTH SECTION - WORKING
+        // LOG-AUTH SECTION - WORKING - 90%
 
-        public static bool authenticator()  // authentication process
+        public static bool authenticator()  // authentication process - DONE
         {
 
             if (SqlConn.authget() == false) return false;
@@ -105,7 +105,7 @@ namespace teamsocl
 
         }
 
-        static void login()  // login widget
+        static void login()  // login widget - DONE
         {
             Console.Clear();
             Console.WriteLine("#######################################################");
@@ -125,7 +125,7 @@ namespace teamsocl
             User.PWord = Console.ReadLine();
         }
 
-        static bool postsplash()  // post splash screen "login or register"
+        static bool postsplash()  // post splash screen "login or register" - DONE
         {
             do
             {
@@ -153,7 +153,7 @@ namespace teamsocl
             while (true);
         }
         
-        public static void splash()  // splash display for start of program
+        public static void splash()  // splash display - DONE
         {
             Console.WriteLine("#######################################################");
             Console.WriteLine("#        Welcome to Go Team Go Live v 1.0.a           #");
@@ -164,16 +164,16 @@ namespace teamsocl
             Console.ReadKey();
         }
 
-        static bool validator(string dbPassword, string password)  // validates authentication
+        static bool validator(string dbPassword, string password)  // validates authentication - DONE
         {
             if (password == "") return false;
             if (dbPassword == password) return true;                             // password validator widget
             else return false;
         }
 
-        // USER REGISTRATION
+        // USER REGISTRATION - WORKING 90%
 
-        static void reginflater(string sourcePath) //int uid 
+        static void reginflater(string sourcePath) //int uid - 90%
         {
             //testing
             //int uid;
@@ -310,7 +310,7 @@ namespace teamsocl
 
         }
 
-        static bool register()  // user register widget
+        static bool register()  // user register widget - 90%
         {
 
             int rNumber, nextUID = 0, nextDID = 0;
@@ -408,9 +408,9 @@ namespace teamsocl
 
         }
 
-        // TEAM REGISTRATION - WORKING
+        // TEAM REGISTRATION - WORKING 90%
 
-        static bool teamregister()
+        static bool teamregister() // Register a new team - 90%
         {
             string tName, ceMail;
             int nextTID = 0;
@@ -462,7 +462,7 @@ namespace teamsocl
             return false;
         }
 
-        // USER JOIN TEAM
+        // USER JOIN TEAM - POOR
 
         public bool jointeamplayer()
         {
@@ -494,21 +494,23 @@ namespace teamsocl
             return true;
         } // NOT FINISHED
 
-        public bool jointeamreq(int tid, int uid) // NOT FINISHED
+        public bool jointeamreq(int tid) // NOT FINISHED
         {
             int cuid = 0;
             string cname = "";
             string tname = "";
+            string cemail = "";
 
-            if (SqlConn.jointeamreq(tid, ref cuid, ref cname, ref tname) == false) return false;
+            if (SqlConn.jointeamreq(tid, User.UID, ref cuid, ref cname, ref tname, ref cemail) == false) return false;
 
             // post message to daemond to email coach CUID, include name to format the email to coach
+
 
 
             return true;
         }
 
-        // CLIENT SIDE MESSAGING
+        // CLIENT SIDE MESSAGING - POOR
 
         public bool catchdaemonmessage()  //INCOMPLETE
         {
@@ -534,9 +536,14 @@ namespace teamsocl
             return true;
         }
 
-        // SERVER SIDE MESSAGING
+        // SERVER SIDE MESSAGING - POOR
 
-        // ADMIN MESSAGING
+        public void jointeamcoachmailer() // NOT FINISHED
+        {
+
+        }
+
+        // ADMIN MESSAGING - POOR
 
         public bool broadcaster(string message)  // NOT FINNISHED
         {
@@ -544,7 +551,7 @@ namespace teamsocl
             return true;
         }
 
-        // DASHBOARD FEATURES
+        // DASHBOARD FEATURES - POOR
 
         public static bool dashboard(SqlConnection conn)
         {
@@ -648,9 +655,9 @@ namespace teamsocl
 
         }
 
-        // CLEANUP
+        // CLEANUP - GOOD
 
-        static int quitter()  // spash to logout or quit
+        static int quitter()  // spash to logout or quit - DONE
         {
             Console.WriteLine("\n\ndo you want to log out? strike (y) quit? (q)");
 
@@ -660,9 +667,9 @@ namespace teamsocl
             else return 3;
         }
         
-        // GENERAL FUNCTIONS
+        // GENERAL FUNCTIONS - GOOD
 
-        public static void connresetter()  // resets the SQL connection
+        public static void connresetter()  // resets the SQL connection - DONE
         {
             SqlConn.conn.Close();
             SqlConn.conn.Open();
@@ -671,7 +678,7 @@ namespace teamsocl
             Console.ReadKey();
         }
 
-        static string weather()  // weather function to be implemented in full later
+        static string weather()  // weather function to be implemented in full later - 90%
         {
             string answer = "";
 

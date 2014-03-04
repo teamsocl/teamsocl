@@ -9,7 +9,7 @@ namespace teamsocl
 {
     public class Emailer
     {
-        static bool emailer(string from, string to, string subject, string body)
+        public bool emailer(string from, string to, string subject, string body)
         {
 
 

@@ -16,6 +16,8 @@ namespace teamsocl
         public bool resolved;
         public DateTime dtg;
 
+        public Emailer mail = new Emailer;
+
         public Message()
         {
             this.mid = 0;
@@ -29,7 +31,7 @@ namespace teamsocl
 
         public void teamjoinreq(string cname, string tname)
         {
-            // send an email off to the coach, saying that 'uid' wants to join his team 'teamname', personalize with his name.  tell him to login to app to accept.
+            mail.emailer()
         }
         public void jointeamack()
         {
