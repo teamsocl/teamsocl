@@ -335,7 +335,7 @@ namespace teamsocl
             return exists;
         }
 
-        public bool jointeamack()
+        public bool jointeamack()  // NEEDS FIXIN!!!!!
         // on ACK from the coach, inflate the player on the team, then add the team ID to the player's creds.
         {
             DBvals DBUser = new DBvals();
@@ -364,13 +364,13 @@ namespace teamsocl
             catch (Exception e)
             { excepter(e); return false; }
 
-            if (message != @"/APPROVED")
+            if (message == @"/APPROVED")
             {
                 try
                 {
-                    cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],[tid],[action],[message],[resolved]) VALUES(" + UID
-                        + ",'" + DBUser.FName + "','" + DBUser.LName
-                        + "'," + DBUser.RNumber + ",'" + DBUser.NName
+                    cmd = new SqlCommand("INSERT INTO [dbo].[coachmessages] ([did],[uid],[tid],[action],"
+                        + "[message],[resolved]) VALUES(" + UID
+                        + "," + UID + "," + TID + ",'','" + DBUser.NName
                         + "'," + DBUser.PhoneNumber + ",'" + DBUser.EMail
                         + "',0,0,0,0)", conn);
                     cmd.ExecuteNonQuery();
@@ -445,7 +445,7 @@ namespace teamsocl
                 // resolve daemond message
                 try
                 {
-                    cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([resolved]) "
+                    cmd = new SqlCommand("UPDATE [dbo].[daemond] ([resolved]) "
                         + "VALUES(1) WHERE [did] = " + DID, conn);
                     cmd.ExecuteNonQuery();
                 }
