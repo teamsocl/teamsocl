@@ -8,12 +8,11 @@ namespace teamsocl
 {
     class Message
     {
-        public int mid;
-        public int fromuid;
-        public int touid;
-        public EventHandler.Event EventType;
+        public int uid;
+        public int cuid;
+        public int tid;
+        public string subject;
         public string message;
-        public bool resolved;
         public DateTime dtg;
 
         private SqlOverheadServer SqlConn = new SqlOverheadServer();
@@ -21,16 +20,23 @@ namespace teamsocl
 
         public Message()
         {
-            this.mid = 0;
-            this.fromuid = 0;
-            this.touid = 0;
-            this.EventType = EventHandler.Event.mail;
+            this.uid = 0;
+            this.cuid = 0;
+            this.tid = 0;
+            this.subject = "";
             this.message = "";
-            this.resolved = false;
-            this.dtg = DateTime.Now;
+
+            string working = SqlConn.getdtg();
+
+            this.dtg = Convert.ToDateTime(working);
         }
 
-        public void teamjoinreq(int cuid, int tid, int uid)
+        public void sentwriter()
+        {
+
+        }
+
+        public void teamjoinreq()
         {
             string recipientfna = "";
             string recipientlna = "";
@@ -61,7 +67,7 @@ namespace teamsocl
             mail.emailer("teamsocl@outlook.com", recipientem, subject, body);
         }
 
-        public void jointeamack(int cuid, int tid, int uid)
+        public void jointeamack()
         {
             // send an email off to the player, saying that 'cname' has accepted and you're part of 'teamname'.  He/she will now recieve messages related to this team.
             string recipientfna = "";
@@ -89,9 +95,10 @@ namespace teamsocl
             
             mail.emailer("teamsocl@outlook.com", recipientem,subject,body);
         }
-        public void newteamevent(string[] players)
+        public void newteamevent()
         {
-            // a player's coach has posted a new event, tell everyone on the team about it.  Use a string array full of player's emails on the team to fill out the 'to' column.
+            string[] players;
+
         }
     }
 }
