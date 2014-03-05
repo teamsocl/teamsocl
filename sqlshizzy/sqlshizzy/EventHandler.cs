@@ -12,58 +12,18 @@ namespace teamsocl
 {
     class EventHandler
     {
-        public static string wwwroot = @"C:\wamp\www\working\";
-
         public static Persona User = new Persona();
         static DBvals[] DBUser;
         public static DBvals DBload = new DBvals();
         static Message message = new Message();
 
-        static SqlOverhead SqlConn = new SqlOverhead();
+        static SqlOverheadClient SqlConn = new SqlOverheadClient();
 
         static WorkingInput workingInput = new WorkingInput();
 
         static bool continueR;
 
-        public enum Event { mail, register, joinrq, joinack, broadcast }
-
         // event/message handling - POOR
-
-        public static void messagehandler(Event ToDo)
-        {
-            
-            message.fromuid = User.UID;
-            message.resolved = false;
-            
-            
-            
-            switch (ToDo)
-            {
-                case Event.mail:
-                    {
-                        
-                        //emailer();
-                        break;
-                    }
-                case Event.register:
-                    {
-                        reginflater(wwwroot);
-                        break;
-                    }
-                case Event.joinrq:
-                    {
-                        break;
-                    }
-                case Event.joinack:
-                    {
-                        break;
-                    }
-                case Event.broadcast:
-                    {
-                        break;
-                    }
-            }
-        }
 
         // LOG-AUTH SECTION - WORKING - 90%
 
@@ -466,13 +426,18 @@ namespace teamsocl
             return false;
         }
 
-        // USER JOIN TEAM - POOR
+        // JOIN TEAM BLOCK
 
-        public bool jointeamuser()
+        public bool jointeamuser(int tid)
         {
-            // write player to team's roster, keep accepted as 0.
-            // leave emailer message on dbo emailer
-            // wait...
+            Message jointeam = new Message();
+
+            jointeam.uid = User.UID;
+            jointeam.tid = tid;
+
+
+
+            jointeam.cuid = SqlConn.tid2cuid(tid);
 
 
             return true;
@@ -480,29 +445,12 @@ namespace teamsocl
 
         // CLIENT SIDE MESSAGING - POOR
 
-        public bool coachappfetcher()  //INCOMPLETE
-        {
-            // get coach id
-            int coachID = 0;
 
-            if ( User.Admin == true && coachID == User.UID )
-            {
-                // Pull applicants
-            }
-            return true;
-        }
 
         public bool teamcaster(string message) // NOT FINISHED
         {
 
             return true;
-        }
-
-        // SERVER SIDE MESSAGING - POOR
-
-        public void jointeamcoachmailer() // NOT FINISHED
-        {
-
         }
 
         // ADMIN MESSAGING - POOR
@@ -680,9 +628,9 @@ namespace teamsocl
             splash();
 
             //TEST SECTION
-            reginflater(wwwroot);
-            Console.WriteLine("asdf");
-            Console.ReadKey();
+            //reginflater(wwwroot);
+            //Console.WriteLine("asdf");
+            //Console.ReadKey();
             //END TEST SECTION
 
             do

@@ -14,7 +14,6 @@ namespace teamsocl
         
         static void Main(string[] args)
         {
-            // Enter text program
             teamsocl.EventHandler.Texty();
         }
     }

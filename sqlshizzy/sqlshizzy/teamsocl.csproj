@@ -53,6 +53,7 @@
     <Compile Include="Persona.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlOverheadClient.cs" />
     <Compile Include="SqlOverheadServer.cs" />
     <Compile Include="WorkingInput.cs" />
   </ItemGroup>

@@ -27,126 +27,10 @@ namespace teamsocl
         public static void messagehandler()
         {
 
-            
-            message.resolved = false;
-
-
-
-            switch (ToDo)
-            {
-                case Event.mail:
-                    {
-
-                        //emailer();
-                        break;
-                    }
-                case Event.register:
-                    {
-                        reginflater(wwwroot);
-                        break;
-                    }
-                case Event.joinrq:
-                    {
-                        break;
-                    }
-                case Event.joinack:
-                    {
-                        break;
-                    }
-                case Event.broadcast:
-                    {
-                        break;
-                    }
-            }
         }
+
 
         // LOG-AUTH SECTION - WORKING - 90%
-
-        public static bool authenticator()  // authentication process - DONE
-        {
-
-            if (SqlConn.authget() == false) return false;
-
-            if (validator(DBload.PWord, User.PWord) == true)
-            {
-
-
-                if (SqlConn.filluser(ref User) == false)
-                {
-                    Console.WriteLine("Connetion error! please log-in again!");
-                    return false;
-                }
-
-
-                Console.WriteLine("\nsuccessfully logged in!");
-
-                Console.WriteLine(User.FName + User.LName + User.NName + User.EMail);
-                Console.WriteLine(User.RNumber.ToString() + User.PhoneNumber.ToString()
-                    + User.Admin + User.TID1);
-
-                Console.ReadKey();
-                Console.Clear();
-                return true;
-            }
-
-            else
-            {
-                Console.WriteLine("You've entered an invalid email or "
-                    + "password! (strike 'any' key to continue)");
-                Console.ReadKey();
-                Console.Clear();
-                return false;
-            }
-
-        }
-
-        static void login()  // login widget - DONE
-        {
-            Console.Clear();
-            Console.WriteLine("#######################################################");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#         Please enter your E-Mail adddress           #");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#######################################################\n");
-            // check this input so noone injects on us
-            User.EMail = Console.ReadLine();
-
-            Console.WriteLine("#######################################################");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#             Please enter your Password              #");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#######################################################\n");
-            // injection block check
-            User.PWord = Console.ReadLine();
-        }
-
-        static bool postsplash()  // post splash screen "login or register" - DONE
-        {
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Do you want to login (L) or register (R)?");
-
-                workingInput.Char(Console.ReadKey());
-
-                switch (workingInput.Char())
-                {
-                    case 'l':
-                        login();
-                        return true;
-                    case 'r':
-                        if (register() == false) break;
-                        else break;
-                    case 'q':
-                        continueR = false;
-                        return false;
-                    default:
-                        Console.WriteLine("oopse!");
-                        break;
-                }
-            }
-            while (true);
-        }
 
         public static void splash()  // splash display - DONE
         {
@@ -305,161 +189,6 @@ namespace teamsocl
 
         }
 
-        static bool register()  // user register widget - 90%
-        {
-
-            int rNumber, nextUID = 0, nextDID = 0;
-            string fName, lName, nName, eMail, passWord;        // input area
-            double phone;
-
-            Console.Clear();
-            Console.WriteLine("#######################################################");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#          Thank you for joining Team Socl!           #");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#######################################################\n");
-
-            do
-            {
-                Console.WriteLine("\n\nPlease fill out the following registry");
-
-                Console.Write("\n\nEmail: ");
-                eMail = Console.ReadLine();
-
-                if (SqlConn.is1in2row3(eMail, "security", "email") == true)
-                {
-                    Console.WriteLine("This E-Mail address has already been registered!\n");
-                    continue;
-                }
-
-                Console.Write("\n\nFirst name: ");
-                fName = Console.ReadLine();
-
-                Console.Write("\n\nLast name: ");
-                lName = Console.ReadLine();
-
-                Console.Write("\n\nNickname: ");
-                nName = Console.ReadLine();
-
-                Console.Write("\n\nJersey number: ");
-                rNumber = Convert.ToInt16(Console.ReadLine());
-
-                // we're taking numbers as double ints here, we're going to put in a cute WPF based block deal that takes 3 for area, 3 for prefix, and 4 for suffix to correct variable input due to player data entry differentiallity.
-
-                Console.Write("\n\nPhone number: ");
-                phone = Convert.ToInt64(Console.ReadLine());
-
-                Console.Clear();
-                Console.WriteLine("You have entered the following data: \n {0} {1} {2} {3} "
-                    + "{4} {5}, you are user # {6}!\n\n Is this data correct?", fName, lName,
-                    nName, rNumber, phone, eMail, nextUID);
-                workingInput.String = Console.ReadLine();
-                if (workingInput.String.ToLower() != "y") continue;
-
-                do
-                {
-                    Console.WriteLine("Please re-enter your email:");
-                    workingInput.String = Console.ReadLine();
-
-                    if (workingInput.String == eMail) break;
-                    else Console.WriteLine("You did not re-enter it correctly\n"); continue;
-                }
-                while (true);
-
-                do
-                {
-                    Console.WriteLine("Please enter the password that you would like to create:");
-                    workingInput.String = Console.ReadLine();
-                    passWord = workingInput.String;
-
-                    Console.WriteLine("Please re-enter the password that you would like to create:");
-                    workingInput.String = Console.ReadLine();
-
-                    if (workingInput.String == passWord) break;
-                    else Console.WriteLine("You did not re-enter it correctly\n"); continue;
-                }
-                while (true);
-
-                // Repull to block collissions if someone else registers at the same time...
-
-                nextUID = SqlConn.getcuruid();
-                nextUID++;
-
-                if (SqlConn.regwriteuser(fName, lName, rNumber, nName, phone,
-                    eMail, nextUID, passWord) == false) return false;
-
-                nextDID = SqlConn.getcurdid();
-                nextDID++;
-
-                if (SqlConn.regwritedaemond(nextDID, nextUID)) return false;
-
-                Console.WriteLine("{0}, Thank you for registering!", fName.ToString());
-                Console.ReadKey();
-
-                return true;
-
-            }
-            while (true);
-
-        }
-
-        // TEAM REGISTRATION - WORKING 90%
-
-        static bool teamregister() // Register a new team - 90%
-        {
-            string tName, ceMail;
-            int nextTID = 0;
-            double cPhone;
-
-            Console.Clear();
-            Console.WriteLine("#######################################################");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#        Thank you for coaching on Team Socl!         #");
-            Console.WriteLine("#                                                     #");
-            Console.WriteLine("#######################################################\n");
-
-            do
-            {
-                Console.WriteLine("\n\nPlease fill out the following team registry");
-
-                Console.Write("\n\nTeam name: ");
-                tName = Console.ReadLine();
-
-                cPhone = User.PhoneNumber;
-                ceMail = User.EMail;
-
-                Console.Write("\n\nTeam Color 1: (experimental, not implemented yet");
-
-                Console.Write("\n\nTeam Color 1: (experimental, not implemented yet");
-
-                Console.Clear();
-
-                workingInput.String = Console.ReadLine();
-
-                Console.WriteLine("You have entered the following data:"
-                    + "\n {0}, {1}, {2}\n\n Is this data correct (y)?"
-                    + "", tName, ceMail, cPhone);
-
-                if (workingInput.String.ToLower() != "y") continue;
-
-                // PULL the next TID available
-
-                nextTID = SqlConn.getcurtid();
-
-                nextTID++;
-
-                //Console.WriteLine("You recieved UID {0}!\n", nextUID);
-
-                //if (
-                SqlConn.teamregwrite(nextTID, tName, User.FName, User.LName, User.UID); //== true)
-                //{ return true; }
-                break;
-
-            }
-            while (true);
-
-            return false;
-        }
 
         // USER JOIN TEAM - POOR
 
@@ -474,45 +203,31 @@ namespace teamsocl
             return true;
         }
 
-        public bool jointeamack(int tid, int uid)
-        {
+        //public bool jointeamack(int tid, int uid)
+        //{
 
 
 
-            if (User.TID1 == 0)
-            { if (SqlConn.filluserstid(1, tid) == false) return false; }
-            else if (User.TID2 == 0)
-            { if (SqlConn.filluserstid(2, tid) == false) return false; }
-            else if (User.TID3 == 0)
-            { if (SqlConn.filluserstid(3, tid) == false) return false; }
-            else if (User.TID4 == 0)
-            { if (SqlConn.filluserstid(4, tid) == false) return false; }
-            else
-            {
-                //send mail to coach saying player's aready in too many teams
-                //send mail to player letting him know he cant join cuz he's full
-            }
+        //    if (User.TID1 == 0)
+        //    { if (SqlConn.filluserstid(1, tid) == false) return false; }
+        //    else if (User.TID2 == 0)
+        //    { if (SqlConn.filluserstid(2, tid) == false) return false; }
+        //    else if (User.TID3 == 0)
+        //    { if (SqlConn.filluserstid(3, tid) == false) return false; }
+        //    else if (User.TID4 == 0)
+        //    { if (SqlConn.filluserstid(4, tid) == false) return false; }
+        //    else
+        //    {
+        //        //send mail to coach saying player's aready in too many teams
+        //        //send mail to player letting him know he cant join cuz he's full
+        //    }
 
 
 
-            return true;
-        } // NOT FINISHED
-
-        public bool jointeamreq(int tid) // NOT FINISHED
-        {
-            int cuid = 0;
-            string cname = "";
-            string tname = "";
-            string cemail = "";
-
-            if (SqlConn.jointeamreq(tid, User.UID, ref cuid, ref cname, ref tname, ref cemail) == false) return false;
-
-            // post message to daemond to email coach CUID, include name to format the email to coach
+        //    return true;
+        //} // NOT FINISHED
 
 
-
-            return true;
-        }
 
         // CLIENT SIDE MESSAGING - POOR
 
@@ -557,78 +272,6 @@ namespace teamsocl
 
         // DASHBOARD FEATURES - POOR
 
-        public static bool dashboard(SqlConnection conn)
-        {
-            do                // Our program once you've logged in successfully
-            {
-                continueR = false;
-                //
-
-
-                Console.Clear();
-                Console.WriteLine("w Weather \nt New team \ns Show security \nq Quit");
-
-                workingInput.Char(Console.ReadKey());
-
-                switch (workingInput.Char())
-                {
-                    case 'w':
-                        {
-                            Console.WriteLine("current weather is : \n\n " + weather());
-                            Console.ReadKey();
-                            Console.Clear();
-                            continue; ;
-                        }
-                    case 't':
-                        {
-                            teamregister();
-                            continue;
-                        }
-                    case 's':
-                        {
-                            Console.Clear();
-
-                            Console.WriteLine(RunSelectString("SELECT" + " * FROM [dbo].[security]", 4, conn));
-                            Console.ReadKey();
-                            continue;
-                        }
-                    case 'q':
-                        {
-                            switch (quitter())
-                            {
-                                case 1:
-                                    return false;
-                                case 2:
-                                    return true;
-                                case 3:
-                                    continue;
-                                default:
-                                    continue;
-                            }
-                        }
-                    default:
-                        Console.WriteLine("oopse!");
-                        break;
-                }
-
-                switch (quitter())
-                {
-                    case 1:
-                        return false;
-                    case 2:
-                        return true;
-                    case 3:
-                        continue;
-                    default:
-                        continue;
-                }
-
-
-            }
-            while (continueR != true);
-            return true;
-        }  // dashboard for main program after auth/valid
-
         static bool pullteamtable(int tid) // TEST ME!!!
         {
             string teamname = "";
@@ -660,16 +303,6 @@ namespace teamsocl
         }
 
         // CLEANUP - GOOD
-
-        static int quitter()  // spash to logout or quit - DONE
-        {
-            Console.WriteLine("\n\ndo you want to log out? strike (y) quit? (q)");
-
-            workingInput.Char(Console.ReadKey());
-            if (workingInput.Char() == 'y') return 1;
-            else if (workingInput.Char() == 'q') return 2;
-            else return 3;
-        }
 
         // GENERAL FUNCTIONS - GOOD
 
@@ -720,31 +353,6 @@ namespace teamsocl
         {
             // Sploosh
             splash();
-
-            //TEST SECTION
-            reginflater(wwwroot);
-            Console.WriteLine("asdf");
-            Console.ReadKey();
-            //END TEST SECTION
-
-            do
-            {
-                continueR = false; // clear our escape flag for continues
-
-                // Postsplash
-                connresetter(); if (postsplash() == false) return;
-
-                // authenticate user
-                connresetter(); if (authenticator() == false) continue;
-
-                // dashboard
-                connresetter(); if (dashboard(SqlConn.conn) == false) continue;
-
-                // quit breaks - continue continues
-                if (continueR == true) continue;
-                else break;
-            }
-            while (continueR != true);
 
         }
 
