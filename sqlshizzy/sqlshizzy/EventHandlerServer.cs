@@ -10,38 +10,33 @@ using System.Xml;
 
 namespace teamsocl
 {
-    class EventHandler
+    class EventHandlerServer
     {
         public static string wwwroot = @"C:\wamp\www\working\";
 
-        public static Persona User = new Persona();
         static DBvals[] DBUser;
         public static DBvals DBload = new DBvals();
         static Message message = new Message();
 
-        static SqlOverhead SqlConn = new SqlOverhead();
-
-        static WorkingInput workingInput = new WorkingInput();
+        static SqlOverheadServer SqlConn = new SqlOverheadServer();
 
         static bool continueR;
 
-        public enum Event { mail, register, joinrq, joinack, broadcast }
-
         // event/message handling - POOR
 
-        public static void messagehandler(Event ToDo)
+        public static void messagehandler()
         {
+
             
-            message.fromuid = User.UID;
             message.resolved = false;
-            
-            
-            
+
+
+
             switch (ToDo)
             {
                 case Event.mail:
                     {
-                        
+
                         //emailer();
                         break;
                     }
@@ -96,7 +91,7 @@ namespace teamsocl
 
             else
             {
-                Console.WriteLine("You've entered an invalid email or " 
+                Console.WriteLine("You've entered an invalid email or "
                     + "password! (strike 'any' key to continue)");
                 Console.ReadKey();
                 Console.Clear();
@@ -152,7 +147,7 @@ namespace teamsocl
             }
             while (true);
         }
-        
+
         public static void splash()  // splash display - DONE
         {
             Console.WriteLine("#######################################################");
@@ -438,12 +433,12 @@ namespace teamsocl
                 Console.Write("\n\nTeam Color 1: (experimental, not implemented yet");
 
                 Console.Clear();
-                
+
                 workingInput.String = Console.ReadLine();
 
-                Console.WriteLine("You have entered the following data:" 
-                    + "\n {0}, {1}, {2}\n\n Is this data correct (y)?" 
-                    + "", tName, ceMail,cPhone);
+                Console.WriteLine("You have entered the following data:"
+                    + "\n {0}, {1}, {2}\n\n Is this data correct (y)?"
+                    + "", tName, ceMail, cPhone);
 
                 if (workingInput.String.ToLower() != "y") continue;
 
@@ -468,11 +463,52 @@ namespace teamsocl
 
         // USER JOIN TEAM - POOR
 
-        public bool jointeamuser()
+        public bool messagecatcher()
         {
-            // write player to team's roster, keep accepted as 0.
-            // leave emailer message on dbo emailer
-            // wait...
+            return true;
+        }
+        
+        public bool jointeamplayer()
+        {
+            //if (SqlConn.jointeamplayer(int tid) == false) return false;
+            return true;
+        }
+
+        public bool jointeamack(int tid, int uid)
+        {
+
+
+
+            if (User.TID1 == 0)
+            { if (SqlConn.filluserstid(1, tid) == false) return false; }
+            else if (User.TID2 == 0)
+            { if (SqlConn.filluserstid(2, tid) == false) return false; }
+            else if (User.TID3 == 0)
+            { if (SqlConn.filluserstid(3, tid) == false) return false; }
+            else if (User.TID4 == 0)
+            { if (SqlConn.filluserstid(4, tid) == false) return false; }
+            else
+            {
+                //send mail to coach saying player's aready in too many teams
+                //send mail to player letting him know he cant join cuz he's full
+            }
+
+
+
+            return true;
+        } // NOT FINISHED
+
+        public bool jointeamreq(int tid) // NOT FINISHED
+        {
+            int cuid = 0;
+            string cname = "";
+            string tname = "";
+            string cemail = "";
+
+            if (SqlConn.jointeamreq(tid, User.UID, ref cuid, ref cname, ref tname, ref cemail) == false) return false;
+
+            // post message to daemond to email coach CUID, include name to format the email to coach
+
 
 
             return true;
@@ -480,14 +516,20 @@ namespace teamsocl
 
         // CLIENT SIDE MESSAGING - POOR
 
-        public bool coachappfetcher()  //INCOMPLETE
+        public bool catchdaemonmessage()  //INCOMPLETE
         {
-            // get coach id
-            int coachID = 0;
-
-            if ( User.Admin == true && coachID == User.UID )
+            // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
+            string messagetype = "";
+            switch (messagetype)
             {
-                // Pull applicants
+                case "1":  //change
+                    {
+                        break;
+                    }
+                case "2":  //change
+                    {
+                        break;
+                    }
             }
             return true;
         }
@@ -591,7 +633,7 @@ namespace teamsocl
         {
             string teamname = "";
             int tcount = 0;
-            
+
             // Pull team's name via its team ID.
 
             teamname = SqlConn.tid2name(tid);
@@ -628,7 +670,7 @@ namespace teamsocl
             else if (workingInput.Char() == 'q') return 2;
             else return 3;
         }
-        
+
         // GENERAL FUNCTIONS - GOOD
 
         public static void connresetter()  // resets the SQL connection - DONE
@@ -783,7 +825,7 @@ namespace teamsocl
 
     return true;
 }*/
-        
+
 
     }
 }

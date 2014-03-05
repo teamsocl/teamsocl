@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace teamsocl
 {
-    public class SqlOverhead
+    public class SqlOverheadServer
     {
         public SqlConnection conn = new SqlConnection(ConnString());  //UID=sa;PWD=testserver
         static SqlCommand cmd;
@@ -43,141 +43,10 @@ namespace teamsocl
 
         // LOGIN/AUTH METHODS
 
-        public bool authget()
-        {
-            cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
-                + "[security] WHERE [email] = '" + EventHandler.User.EMail.ToLower() + "'", conn);
-            reader = cmd.ExecuteReader();
-            try
-            {
-                while (reader.Read())
-                {
-                    EventHandler.DBload.EMail = reader.GetString(0);
-                    EventHandler.DBload.PWord = reader.GetString(1);
-                    EventHandler.DBload.Admin = reader.GetBoolean(2);
-                    EventHandler.DBload.UID = reader.GetInt32(3);
-                    EventHandler.User.UID = EventHandler.DBload.UID;
-                }
-
-                reader.Close();
-            }
-            catch (Exception e)
-            { excepter(e); return false; }
-            return true;
-        }
-
-        public bool filluser(ref Persona User)
-        {
-            cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
-                    ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
-                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + User.UID, conn);
-            reader = cmd.ExecuteReader();
-
-            try
-            {
-                while (reader.Read())
-                {
-                    User.FName = reader.GetString(0);
-                    User.LName = reader.GetString(1);
-                    User.NName = reader.GetString(2);
-                    User.EMail = reader.GetString(3);
-                    User.RNumber = reader.GetInt32(4);
-                    User.Admin = reader.GetBoolean(5);
-                    User.TID1 = reader.GetInt32(6);
-                    User.TID2 = reader.GetInt32(7);
-                    User.TID3 = reader.GetInt32(8);
-                    User.TID4 = reader.GetInt32(9);
-                    User.PhoneNumber = reader.GetInt64(10);
-                }
-
-                reader.Close();
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine("ERROR: " + e);
-                Console.ReadLine();
-
-                Console.WriteLine("Connetion error! please log-in again!");
-                return false;
-            }
-
-            return true;
-        }
-
-        // USER REGISTRATION
-
-        public bool regwriteuser(string fName, string lName, int rNumber, string nName, double phone, string eMail, int nextUID, string passWord)
-        {
-            try
-            {
-                cmd = new SqlCommand("INSERT INTO [dbo].[users] ([uid],"
-                    + "[first_name],[last_name],[roster_num],[nickname],[admin]"
-                    + ",[phone],[email],[tids1],[tids2],[tids3],[tids4]) VALUES"
-                    + "(" + nextUID + ",'" + fName + "','" + lName + "'," + rNumber
-                    + ",'" + nName + "',1," + phone + ",'" + eMail + "',0,0,0,0)", conn);
-                cmd.ExecuteNonQuery();
-
-
-                cmd = new SqlCommand("INSERT INTO [dbo].[security] ([uid],[password],[admin],"
-                    + "[email],[active]) VALUES"
-                    + "(" + nextUID + ",'" + passWord + "',1,'" + eMail + "',0)", conn);
-                cmd.ExecuteNonQuery();
-
-            }
-            catch (Exception e)
-            { excepter(e); return false; }
-            return true;
-        }
-
-        public bool regwritedaemond(int nextDID, int nextUID)
-        {
-
-            try
-            {
-                cmd = new SqlCommand("INSERT INTO [dbo].[daemond] ([did],[uid],[tid]"
-                    + "[action],[message],[resolved]) VALUES (" + nextDID
-                    + "," + nextUID + ",0,'REGISTER','rando',0)", conn);
-                cmd.ExecuteNonQuery();
-
-            }
-            catch (Exception e)
-            {
-                excepter(e); return false;
-            }
-            return true;
-        }
-
-        // TEAM REGISTRATION
-
-        public bool teamregwrite(int nextTID, string tName, string cFirst, string cLast, int cID)
-        {
-            try
-            {
-                cmd = new SqlCommand("INSERT INTO [dbo].[teams] ([tid],[team_name],[coachf],"
-                    + "[coachl],[coach_uid]) VALUES"
-                    + "(" + nextTID + ",'" + tName + "','" + cFirst + "','" + cLast
-                    + "'," + cID + ")", conn);
-                cmd.ExecuteNonQuery();
-
-                cmd = new SqlCommand("CREATE TABLE [dbo].[z" + tName.ToLower() +
-                    "]([uid] [int] NULL,[first_name] [varchar](15) NULL," +
-                    "[last_name] [varchar](15) NULL,[roster_num] [int] NULL," +
-                    "[nickname] [varchar](15) NULL,[phone] [bigint] NULL,[email]" +
-                    "[varchar](35) NULL,[privacy] [bit] NULL,[approved] [bit] NULL)", conn);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            { excepter(e); return false; }
-            return true;
-        }
-
-        //
-
         public bool broadcaster(int tid, string message, int uid, bool sticky, int locid, string etype) // NOT COMPLETE!!! add EVENT's DTG once DTG function is figured out.
         {
             string teamname = tid2name(tid);
-            
+
             int nextBID = getcurbid();
 
             int stickybit = 0;
@@ -189,7 +58,7 @@ namespace teamsocl
                 cmd = new SqlCommand("INSERT INTO [dbo].[broadcast] ([bid],[tid]"
                     + ",[team_name],[posteruid],[pdtg],[edtg],[content],[sticky],[locid]"
                     + ",[etype]) VALUES(" + nextBID + "," + tid + ",'" + teamname
-                    + "'," + uid + "," + DateTime.Now + "," + DateTime.Now + ",'" 
+                    + "'," + uid + "," + DateTime.Now + "," + DateTime.Now + ",'"
                     + message + "'," + stickybit + "," + locid + ",'" + etype
                     + "')", conn);
                 cmd.ExecuteNonQuery();
@@ -199,11 +68,11 @@ namespace teamsocl
             return true;
         }
 
-        public bool fetchdaemonmessage()  //INCOMPLETE
+        public bool fetchdaemonmessages()  //INCOMPLETE
         {
             // query message via sqloverhead's fetchdaemonmessage for 1 message that isn't "completed"/1, and still "active"/0 in daemond message queue...
             string messagetype = "";
-            switch( messagetype )
+            switch (messagetype)
             {
                 case "":
                     {
@@ -217,9 +86,41 @@ namespace teamsocl
 
         public void excepter(Exception e)
         {
-            Console.WriteLine("ERROR: " + e);
-            Console.ReadLine();
-            Console.WriteLine("Connetion error! please log-in again!\n");
+            // WRITE TO A LOG HERE  --- Use this code below...
+            /*try
+            {
+                // create the ProcessStartInfo using "cmd" as the program to be run,
+                // and "/c " as the parameters.
+                // Incidentally, /c tells cmd that we want it to execute the command that follows,
+                // and then exit.
+                System.Diagnostics.ProcessStartInfo procStartInfo =
+                    new System.Diagnostics.ProcessStartInfo("cmd", @"/c type "
+                        + sourcePathBase + @"insert1.txt "
+                        + sourcePathBase + @"insert2.txt "
+                        + sourcePathBase + @"insert3.txt > "
+                        + sourcePathBase + @"insert.php");
+
+                // The following commands are needed to redirect the standard output.
+                // This means that it will be redirected to the Process.StandardOutput StreamReader.
+                procStartInfo.RedirectStandardOutput = true;
+                procStartInfo.UseShellExecute = false;
+                // Do not create the black window.
+                procStartInfo.CreateNoWindow = true;
+                // Now we create a process, assign its ProcessStartInfo and start it
+                System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                proc.StartInfo = procStartInfo;
+                proc.Start();
+                // Get the output into a string
+                string result = proc.StandardOutput.ReadToEnd();
+                // Display the command output.
+                Console.WriteLine(result);
+            }
+            catch (Exception objException)
+            {
+                Console.WriteLine(objException);
+            }
+            */
+
         }
 
         public int getcurbid() // gets current broadcast message ID
@@ -310,15 +211,15 @@ namespace teamsocl
         {
             bool exists = false;
 
-            cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["+table+"] WHERE "
-                + "["+rowname+"] = '" + value + "'", conn);
+            cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].[" + table + "] WHERE "
+                + "[" + rowname + "] = '" + value + "'", conn);
             reader = cmd.ExecuteReader();
 
             try
             {
                 while (reader.Read())
                 {
-                    if (reader.GetInt32(0) >= 1) exists = true ;
+                    if (reader.GetInt32(0) >= 1) exists = true;
                 }
 
                 reader.Close();
@@ -340,7 +241,7 @@ namespace teamsocl
             string message = "";
 
             cmd = new SqlCommand("SELECT TOP 1 [did],[uid],[message]" +
-                    ",[tid] FROM [dbo].[daemonreg] WHERE [action] = 'TREQUEST' AND [resolved] = 0", conn);
+                    ",[tid] FROM [dbo].[daemond] WHERE [action] = 'TREQUEST' AND [resolved] = 0", conn);
             reader = cmd.ExecuteReader();
 
             try
@@ -454,13 +355,13 @@ namespace teamsocl
         public bool jointeamfilltids(int slot, int TID, int UID)
         {
             try
-                {
-                    cmd = new SqlCommand("INSERT INTO [dbo].[users] ([tids"+slot+"]) VALUES(" + TID
-                        + ") WHERE [uid]="+UID, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                { excepter(e); return false; }
+            {
+                cmd = new SqlCommand("INSERT INTO [dbo].[users] ([tids" + slot + "]) VALUES(" + TID
+                    + ") WHERE [uid]=" + UID, conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            { excepter(e); return false; }
             return true;
         }
 
@@ -489,7 +390,7 @@ namespace teamsocl
         }
 
         public bool jointeamreq(int tid, int UID, ref int cuid, ref string cname, ref string tname, ref string cemail)
-            // takes in the team ID, returns the coache's ID, his first name, and the team's name via REF, bool for SQL error.
+        // takes in the team ID, returns the coache's ID, his first name, and the team's name via REF, bool for SQL error.
         {
 
             cmd = new SqlCommand("SELECT [coach_uid],[team_name],[coachf],[ FROM [dbo]."
@@ -579,7 +480,7 @@ namespace teamsocl
 
         public int teammemcount(string teamname)
         {
-            int tcount=0;
+            int tcount = 0;
 
             cmd = new SqlCommand("SELECT COUNT([UID]) FROM [dbo].[z" + teamname + "]", conn);
             reader = cmd.ExecuteReader();
@@ -663,8 +564,8 @@ namespace teamsocl
         public string tid2name(int tid)
         {
             string teamname = "";
-            cmd = new SqlCommand("SELECT [team_name] FROM [dbo]" 
-                + ".[teams] WHERE [tid] = " + tid + ", SqlConn.conn");
+            cmd = new SqlCommand("SELECT [team_name] FROM [dbo]"
+                + ".[teams] WHERE [tid] = " + tid, conn);
 
             reader = cmd.ExecuteReader();
 
@@ -678,8 +579,71 @@ namespace teamsocl
             }
 
             catch (Exception e)
-            { excepter(e); return "ERROR"; }
+            { excepter(e); }
             return teamname;
+        }
+
+        public string uid2email(int uid)
+        {
+            string email = "";
+            cmd = new SqlCommand("SELECT [email] FROM [dbo]"
+                + ".[users] WHERE [uid] = " + uid, conn);
+
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    email = reader.GetString(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+            return email;
+        }
+
+        public void uid2name(int tid, ref string fname)
+        {
+            cmd = new SqlCommand("SELECT [fname] FROM [dbo]"
+                + ".[users] WHERE [uid] = " + uid, conn);
+
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    fname = reader.GetString(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+        }
+
+        public void uid2name(int tid, ref string fname, ref string lname)
+        {
+            cmd = new SqlCommand("SELECT [fname],[lname] FROM [dbo]"
+                + ".[users] WHERE [uid] = " + uid, conn);
+
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    fname = reader.GetString(0);
+                    lname = reader.GetString(1);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
         }
 
         // METHOD TO POPULATE FROM CONFIG FILE GOES HERE
