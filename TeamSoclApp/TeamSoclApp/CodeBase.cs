@@ -20,7 +20,6 @@ namespace TeamSoclApp
 
         public bool register()
         {
-
             return true;
         }
 
