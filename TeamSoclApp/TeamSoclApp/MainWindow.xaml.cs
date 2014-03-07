@@ -24,10 +24,10 @@ namespace TeamSoclApp
         public Persona player = new Persona();
         public Persona[] playerarray;
 
-        public SqlOverhead SqlConn = new SqlOverhead();
-        public SqlUnderbelly SqlExec = new SqlUnderbelly();
+        public SqlOverhead SqlConn;
+        public SqlUnderbelly SqlExec;
 
-        public CodeBase code = new CodeBase();
+        public CodeBase code;
 
         public System.Text.StringBuilder error = new System.Text.StringBuilder();
 
@@ -35,7 +35,7 @@ namespace TeamSoclApp
         {
             InitializeComponent();
         }
-        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             user.EMail = Convert.ToString(login_email_input.Text);
@@ -51,7 +51,11 @@ namespace TeamSoclApp
             {
                 user.UID = player.UID;
 
-                //code.user_populate
+                if (code.user_populate() == false)
+                {
+                    MessageBox.Show("You've entered an invalid Email or Password\nor you're not connected to the internet");
+                    return;
+                }
 
                 Dashboard dash = new Dashboard();
                 dash.Owner = this;
@@ -60,9 +64,13 @@ namespace TeamSoclApp
             }
             else
             { MessageBox.Show("You've entered an invalid Email or Password\nor you're not connected to the internet"); }
+        }
 
-
-
+        private void Register_Click(object sender, MouseButtonEventArgs e)
+        {
+            RegisterUser URegister = new RegisterUser();
+            URegister.Owner = this;
+            URegister.Show();
         }
     }
 }

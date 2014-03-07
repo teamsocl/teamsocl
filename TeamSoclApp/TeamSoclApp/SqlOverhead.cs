@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace TeamSoclApp
 {
-    public class SqlOverhead : MainWindow
+    public class SqlOverhead
     {
-        public SqlConnection conn = new SqlConnection(ConnString());
+        public SqlConnection conn = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=teamsocl;UID=sa;PWD=testserver");
         public SqlCommand cmd;
         public SqlDataReader reader;
 
         public string bit1 = "Server=";
-        private string server = "";        // bit 2
+        //private string server = "";        // bit 2
         public string bit3 = ";Database=";
-        private string database = "";      // bit 4
+        //private string database = "";      // bit 4
         public string bit5 = ";UID=";
-        private string uid = "";           // bit 6
+        //private string uid = "";           // bit 6
         public string bit7 = ";PWD=";
-        private string password = "";      // bit 8
+        //private string password = "";      // bit 8
 
-        static string ConnString()
+        public string ConnString()
         {
             //return bit1 + server + bit3 + database + bit3 + 5 + uid + bit7 + password;
             return "Server=localhost\\SQLEXPRESS;Database=teamsocl;UID=sa;PWD=testserver"; //LAB
