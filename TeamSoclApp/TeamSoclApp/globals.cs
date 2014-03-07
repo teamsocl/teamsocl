@@ -18,6 +18,11 @@ namespace TeamSoclApp
 
         public static weather forecast = new weather();
 
+        public static string dtg;
+
+        public static int UID, TID;
+        public static int MRID1, MRID2, MRID3, MEID;
+
         public static System.Text.StringBuilder error = new System.Text.StringBuilder();
     }
 }

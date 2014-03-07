@@ -32,10 +32,12 @@ namespace TeamSoclApp
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) // 100% - Login button
         {
+            // INPUT VALIDATION!!!
             globals.user.EMail = Convert.ToString(login_email_input.Text);
             globals.user.PWord = Convert.ToString(login_password_input.Text);
+            // END - INPUT VALIDATION!!!
 
             if (globals.user.PWord == "" || globals.user.EMail == "")
             {

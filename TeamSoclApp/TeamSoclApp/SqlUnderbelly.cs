@@ -9,11 +9,198 @@ namespace TeamSoclApp
 {
     public class SqlUnderbelly
     {
-
-        public bool login()
+        public void connreset()
         {
             globals.SqlConn.conn.Close();
             globals.SqlConn.conn.Open();
+        }
+
+        public bool getdtg()
+        {
+            string dtg = "";
+
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT CURRENT_TIMESTAMP", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    dtg = globals.SqlConn.reader.GetString(0);
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            globals.dtg = dtg.Substring(0, 16);
+
+            return true;
+        }
+
+        public bool getcuruid() // gets current maximum User ID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(uid) FROM [dbo].[users]", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.UID = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool getcurtid() // gets current maximum Team ID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(tid) FROM [dbo].[teams]", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.TID = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool getcurmrid1() // gets current maximum Register Message Table 1 ID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(ejtid) FROM [dbo].[mr1]", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.MRID1 = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool getcurmrid2() // gets current maximum Register Message Table 2 ID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(ejtid) FROM [dbo].[mr2]", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.MRID2 = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            return true;
+        }
+        
+        public bool getcurmrid3() // gets current maximum Register Message Table 3 ID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(ejtid) FROM [dbo].[mr3]", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.MRID3 = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                }
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool is1in2row3(string value, string table, string rowname)
+        {
+            connreset();
+
+            bool exists = false;
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["
+                + table + "] WHERE [" + rowname + "] = '" + value 
+                + "'", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    if (globals.SqlConn.reader.GetInt32(0) >= 1) exists = true;
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return exists;
+        }
+
+        public bool login()
+        {
+            connreset();
 
             globals.SqlConn.cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
                 + "[security] WHERE [email] = '" + globals.user.EMail.ToLower() + "'", globals.SqlConn.conn);
@@ -37,42 +224,83 @@ namespace TeamSoclApp
             }
 
             return true;
-        }
+        } // corresponds with code.login and MainWindow
 
-        //public bool user_populate()
-        //{
-        //    SqlConn.cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
-        //            ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
-        //            ",[phone] FROM [dbo].[users] WHERE [uid] = " + user.UID, SqlConn.conn);
-        //    SqlConn.reader = SqlConn.cmd.ExecuteReader();
+        public bool register()
+        {
 
-        //    try
-        //    {
-        //        while (SqlConn.reader.Read())
-        //        {
-        //            user.FName = SqlConn.reader.GetString(0);
-        //            user.LName = SqlConn.reader.GetString(1);
-        //            user.NName = SqlConn.reader.GetString(2);
-        //            user.EMail = SqlConn.reader.GetString(3);
-        //            user.RNumber = SqlConn.reader.GetInt32(4);
-        //            user.Admin = SqlConn.reader.GetBoolean(5);
-        //            user.TID1 = SqlConn.reader.GetInt32(6);
-        //            user.TID2 = SqlConn.reader.GetInt32(7);
-        //            user.TID3 = SqlConn.reader.GetInt32(8);
-        //            user.TID4 = SqlConn.reader.GetInt32(9);
-        //            user.PhoneNumber = SqlConn.reader.GetInt64(10);
-        //        }
+            is1in2row3(globals.player.EMail, "security", "email");
 
-        //        SqlConn.reader.Close();
-        //    }
+            if (getcuruid() == false) return false;
 
-        //    catch (Exception e)
-        //    {
-        //        error.Append(" ERROR: " + e);
-        //        return false;
-        //    }
-        //    return true;
-        //}
+            int nextUID = globals.UID;
+
+            nextUID++;
+
+            try
+            {
+                globals.SqlConn.cmd = new SqlCommand("INSERT INTO [dbo].[users] ([uid],"
+                    + "[first_name],[last_name],[roster_num],[nickname],[admin]"
+                    + ",[phone],[email],[tids1],[tids2],[tids3],[tids4]) VALUES"
+                    + "(" + nextUID + ",'" + globals.player.FName + "','"
+                    + globals.player.LName + "'," + globals.player.RNumber
+                    + ",'" + globals.player.NName + "',1,"
+                    + globals.player.PhoneNumber + ",'" + globals.player.EMail
+                    + "',0,0,0,0)", globals.SqlConn.conn);
+                globals.SqlConn.cmd.ExecuteNonQuery();
+
+
+                globals.SqlConn.cmd = new SqlCommand("INSERT INTO [dbo].[security] ([uid],"
+                    + "[password],[admin],[email],[active]) VALUES(" + nextUID
+                    + ",'" + globals.player.PWord + "',0,'" + globals.player.EMail
+                    + "',0)", globals.SqlConn.conn);
+                globals.SqlConn.cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        } // corresponds with code.register and Register
+
+        public bool user_populate()
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
+                    ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
+                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + globals.user.UID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.user.FName = globals.SqlConn.reader.GetString(0);
+                    globals.user.LName = globals.SqlConn.reader.GetString(1);
+                    globals.user.NName = globals.SqlConn.reader.GetString(2);
+                    globals.user.EMail = globals.SqlConn.reader.GetString(3);
+                    globals.user.RNumber = globals.SqlConn.reader.GetInt32(4);
+                    globals.user.Admin = globals.SqlConn.reader.GetBoolean(5);
+                    globals.user.TID1 = globals.SqlConn.reader.GetInt32(6);
+                    globals.user.TID2 = globals.SqlConn.reader.GetInt32(7);
+                    globals.user.TID3 = globals.SqlConn.reader.GetInt32(8);
+                    globals.user.TID4 = globals.SqlConn.reader.GetInt32(9);
+                    globals.user.PhoneNumber = globals.SqlConn.reader.GetInt64(10);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        } 
 
     }
 }

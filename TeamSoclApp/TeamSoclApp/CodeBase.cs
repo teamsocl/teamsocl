@@ -20,7 +20,13 @@ namespace TeamSoclApp
 
         public bool register()
         {
-            return true;
+
+            if (globals.SqlExec.register() == true)
+            {
+
+            }
+            
+            return false;
         }
 
         public bool user_populate()
