@@ -14,6 +14,8 @@ namespace TeamSoclApp
         public static SqlOverhead SqlConn = new SqlOverhead();
         public static SqlUnderbelly SqlExec = new SqlUnderbelly();
 
+        public static Emailer messager = new Emailer();
+
         public static CodeBase code = new CodeBase();
 
         public static weather forecast = new weather();

@@ -204,9 +204,10 @@ namespace TeamSoclApp
 
             globals.SqlConn.cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
                 + "[security] WHERE [email] = '" + globals.user.EMail.ToLower() + "'", globals.SqlConn.conn);
-            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
             try
             {
+                globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
                 while (globals.SqlConn.reader.Read())
                 {
                     globals.player.EMail = globals.SqlConn.reader.GetString(0);
