@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="SqlOverhead.cs" />
     <Compile Include="SqlUnderbelly.cs" />
+    <Compile Include="weather.cs" />
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
