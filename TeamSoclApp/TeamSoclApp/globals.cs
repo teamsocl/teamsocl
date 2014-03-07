@@ -16,6 +16,8 @@ namespace TeamSoclApp
 
         public static CodeBase code = new CodeBase();
 
+        public static weather forecast = new weather();
+
         public static System.Text.StringBuilder error = new System.Text.StringBuilder();
     }
 }

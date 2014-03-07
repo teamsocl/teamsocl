@@ -7,9 +7,9 @@ using System.Xml;
 
 namespace TeamSoclApp
 {
-    class weather
+    public class weather
     {
-        static string weather(string zip1)  // weather function to be implemented in full later - 90%
+        public string wx(string zip1)  // weather function to be implemented in full later - 90%
         {
             string answer = "";
 
