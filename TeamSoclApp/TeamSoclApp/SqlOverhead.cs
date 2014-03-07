@@ -9,7 +9,7 @@ namespace TeamSoclApp
 {
     public class SqlOverhead
     {
-        public SqlConnection conn = new SqlConnection("Server=localhost\\SQLEXPRESS;Database=teamsocl;UID=sa;PWD=testserver");
+        public SqlConnection conn = new SqlConnection(ConnString());
         public SqlCommand cmd;
         public SqlDataReader reader;
 
@@ -22,7 +22,7 @@ namespace TeamSoclApp
         public string bit7 = ";PWD=";
         //private string password = "";      // bit 8
 
-        public string ConnString()
+        public static string ConnString()
         {
             //return bit1 + server + bit3 + database + bit3 + 5 + uid + bit7 + password;
             return "Server=localhost\\SQLEXPRESS;Database=teamsocl;UID=sa;PWD=testserver"; //LAB
