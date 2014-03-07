@@ -29,9 +29,12 @@ namespace TeamSoclApp
             //return "Server=localhost;Database=teamsocl;User Id=sa;PWD=team12socl34"; //LEXIT
         }
 
-        public void BuildStringFromConfig()
+        public void BuildStringFromConfig() // 0% - populate connection string via included config file
         {
-            
+            //server = 
+            //database =
+            //uid =
+            //password =
         }
     }
 }
