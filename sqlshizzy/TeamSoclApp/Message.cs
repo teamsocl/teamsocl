@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Xml;
 
 namespace TeamSoclApp
 {
-    class Message
+    public class Message : CodeBase
     {
         public int uid;
         public int cuid;
@@ -15,7 +26,6 @@ namespace TeamSoclApp
         public string message;
         public DateTime dtg;
 
-        private SqlOverheadServer SqlConn = new SqlOverheadServer();
         public Emailer mail = new Emailer();
 
         public Message()
@@ -26,7 +36,7 @@ namespace TeamSoclApp
             this.subject = "";
             this.message = "";
 
-            string working = SqlConn.getdtg();
+            string working = CodeBase.SqlConn.getdtg();
 
             this.dtg = Convert.ToDateTime(working);
         }
@@ -97,7 +107,7 @@ namespace TeamSoclApp
         }
         public void newteamevent()
         {
-            string[] players;
+            //string[] players;
 
         }
     }

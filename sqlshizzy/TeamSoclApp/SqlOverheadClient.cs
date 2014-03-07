@@ -7,9 +7,37 @@ using System.Threading.Tasks;
 
 namespace TeamSoclApp
 {
-    public class SqlOverheadServer : SqlOverhead
+    public class SqlOverheadClient : SqlOverhead
     {
-        private DBvals DBuser = new DBvals();
+
+        // LOGIN/AUTH METHODS
+
+        public bool authget()
+        {
+            conn.Open();
+            cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
+                + "[security] WHERE [email] = '" + CodeBase.User.EMail.ToLower() + "'", conn);
+            reader = cmd.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    CodeBase.DBload.EMail = reader.GetString(0);
+                    CodeBase.DBload.PWord = reader.GetString(1);
+                    CodeBase.DBload.Admin = reader.GetBoolean(2);
+                    CodeBase.DBload.UID = reader.GetInt32(3);
+                    CodeBase.User.UID = CodeBase.DBload.UID;
+                }
+
+                reader.Close();
+            }
+            catch (Exception e)
+            { excepter(e); return false; }
+            conn.Close();
+            return true;
+        }
+
+
 
         public bool broadcaster(int tid, string message, int uid, bool sticky, int locid, string etype) // NOT COMPLETE!!! add EVENT's DTG once DTG function is figured out.
         {
@@ -264,5 +292,6 @@ namespace TeamSoclApp
 
             return true;
         }
+
     }
 }

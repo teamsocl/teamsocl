@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace teamsocl
+namespace TeamSoclApp
 {
     public class SqlOverheadClient : SqlOverhead
     {

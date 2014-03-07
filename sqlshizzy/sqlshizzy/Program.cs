@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace teamsocl
+namespace TeamSoclApp
 {
     class Program
     {
         
         static void Main(string[] args)
         {
-            teamsocl.EventHandler.Texty();
+            //teamsocl.EventHandler.Texty();
         }
     }
 }
