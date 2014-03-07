@@ -24,5 +24,11 @@ namespace TeamSoclApp
         public static int MRID1, MRID2, MRID3, MEID;
 
         public static System.Text.StringBuilder error = new System.Text.StringBuilder();
+
+        public static void flush()
+        {
+            user = new Persona();
+            player = new Persona();
+        }
     }
 }

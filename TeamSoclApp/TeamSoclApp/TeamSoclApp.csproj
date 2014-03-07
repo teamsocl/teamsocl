@@ -60,6 +60,7 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="CodeBase.cs" />
+    <Compile Include="Emailer.cs" />
     <Compile Include="globals.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="RegisterTeam.xaml.cs">

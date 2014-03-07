@@ -23,5 +23,16 @@ namespace TeamSoclApp
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if ( Convert.ToString(globals.error).Length>=5)
+            {
+
+            }
+            Owner.Show();
+            globals.flush();
+            this.Close();
+        }
     }
 }

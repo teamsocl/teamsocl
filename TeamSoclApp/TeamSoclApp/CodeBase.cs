@@ -20,12 +20,13 @@ namespace TeamSoclApp
 
         public bool register()
         {
+            
+
 
             if (globals.SqlExec.register() == true)
             {
 
             }
-            
             return false;
         }
 
