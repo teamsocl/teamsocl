@@ -15,21 +15,17 @@ using System.Windows.Shapes;
 
 namespace TeamSoclApp
 {
+
+    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Persona user = new Persona();
-        public Persona player = new Persona();
-        public Persona[] playerarray;
-
-        public SqlOverhead SqlConn;
-        public SqlUnderbelly SqlExec;
-
-        public CodeBase code;
-
-        public System.Text.StringBuilder error = new System.Text.StringBuilder();
+        //public Persona user = new Persona();
+        //public Persona player = new Persona();
+        //public Persona[] playerarray;
 
         public MainWindow()
         {
@@ -38,23 +34,22 @@ namespace TeamSoclApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            user.EMail = Convert.ToString(login_email_input.Text);
-            user.PWord = Convert.ToString(login_password_input.Text);
+            globals.user.EMail = Convert.ToString(login_email_input.Text);
+            globals.user.PWord = Convert.ToString(login_password_input.Text);
 
-            if (user.PWord == "" || user.EMail == "")
+            if (globals.user.PWord == "" || globals.user.EMail == "")
             {
                 MessageBox.Show("You haven't entered an Email or Password");
                 return;
             }
 
-            if (code.login() == true)
-            {
-                user.UID = player.UID;
+            globals.user.UID = globals.player.UID;
 
-                if (code.user_populate() == false)
+            if (globals.code.login())
+            {
+                if (globals.code.user_populate() == false)
                 {
                     MessageBox.Show("You've entered an invalid Email or Password\nor you're not connected to the internet");
-                    return;
                 }
 
                 Dashboard dash = new Dashboard();

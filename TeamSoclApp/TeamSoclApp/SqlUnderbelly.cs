@@ -7,28 +7,32 @@ using System.Threading.Tasks;
 
 namespace TeamSoclApp
 {
-    public class SqlUnderbelly : MainWindow
+    public class SqlUnderbelly
     {
+
         public bool login()
         {
-            SqlConn.cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
-                + "[security] WHERE [email] = '" + user.EMail.ToLower() + "'", SqlConn.conn);
-            SqlConn.reader = SqlConn.cmd.ExecuteReader();
+            globals.SqlConn.conn.Close();
+            globals.SqlConn.conn.Open();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [email],[password],[admin],[uid] FROM [dbo]."
+                + "[security] WHERE [email] = '" + globals.user.EMail.ToLower() + "'", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
             try
             {
-                while (SqlConn.reader.Read())
+                while (globals.SqlConn.reader.Read())
                 {
-                    player.EMail = SqlConn.reader.GetString(0);
-                    player.PWord = SqlConn.reader.GetString(1);
-                    player.Admin = SqlConn.reader.GetBoolean(2);
-                    player.UID = SqlConn.reader.GetInt32(3);
+                    globals.player.EMail = globals.SqlConn.reader.GetString(0);
+                    globals.player.PWord = globals.SqlConn.reader.GetString(1);
+                    globals.player.Admin = globals.SqlConn.reader.GetBoolean(2);
+                    globals.player.UID = globals.SqlConn.reader.GetInt32(3);
                 }
 
-                SqlConn.reader.Close();
+                globals.SqlConn.reader.Close();
             }
             catch (Exception e)
             {
-                error.Append(" ERROR: " + e);
+                globals.error.Append(" ERROR: " + e);
                 return false;
             }
 

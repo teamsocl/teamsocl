@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace TeamSoclApp
 {
-    public class CodeBase : MainWindow
+    public class CodeBase
     {
         public bool login()
         {
-            if (SqlExec.login() == false) return false;
-
-            if (user.PWord == player.PWord) return true;
+            if (globals.SqlExec.login() == true)
+            {
+                if (globals.user.PWord == globals.player.PWord) return true;
+            }
 
             return false;
         }
-
-
 
         public bool register()
         {
@@ -27,7 +26,7 @@ namespace TeamSoclApp
 
         public bool user_populate()
         {
-            if (SqlExec.login() == true) return true;
+            if (globals.SqlExec.login() == true) return true;
             return false;
         }
     }
