@@ -20,12 +20,9 @@ namespace TeamSoclApp
 
         public bool register()
         {
-            
-
-
             if (globals.SqlExec.register() == true)
             {
-
+                //meesage register 1 creation and submission...
             }
             return false;
         }
