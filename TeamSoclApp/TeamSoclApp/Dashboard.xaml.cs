@@ -28,7 +28,7 @@ namespace TeamSoclApp
         {
             if ( Convert.ToString(globals.error).Length>=5)
             {
-                globals.messager.emailer("teamsocl@outlook.com",
+                globals.mailer.emailer("teamsocl@outlook.com",
                     "teamsocl@outlook.com", "ERROR LOG FOR "
                     + globals.user.UID, "ERROR LOG FOR UID "
                     + globals.user.UID + " CONTAINS THE FOLLOWING: " 

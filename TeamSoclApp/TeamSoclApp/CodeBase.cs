@@ -34,15 +34,13 @@ namespace TeamSoclApp
         {
             if (globals.SqlExec.register() == true)
             {
-                // INPUT VALIDATION
-                globals.user.EMail = 
-                globals.user.FName =
-                globals.user.LName = 
-                globals.user.RNumber =
-                globals.user.PhoneNumber = 
-                globals.user.Privacy = 
-                globals.user.PWord =
-                // INPUT VALIDATION
+                globals.user.TID1 = 0;
+                globals.user.TID2 = 0;
+                globals.user.TID3 = 0;
+                globals.user.TID3 = 0;
+                globals.user.Admin = false;
+
+                // globals.user.UID is filled in REGISTER DUE TO NEED TO PULL UID SWIFTLY!!!!
 
                 //registry message
                 return true;

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TeamSoclApp
 {
-    class Messages
+    public class Messages
     {
         public bool fillmr1()
         {
-            globals.mailer.emailer(globals.user.EMail,globals.player.EMail,);
+            globals.mailer.emailer(globals.user.EMail,globals.player.EMail,globals.TITLE,globals.MESSAGE);
             //sqlunderbelly fillmr1();
             return true;
         }

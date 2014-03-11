@@ -28,7 +28,7 @@ namespace TeamSoclApp
             try
             {
                 globals.SqlConn.cmd = new SqlCommand("INSERT INTO [dbo].[mr1] "
-                    + "([mrid1],[uid],[tid],[cuid],[pdtg],[edtg],[subject]" 
+                    + "([mrid1],[uid],[tid],[cuid],[pdtg],[subject]" 
                     + ",[content]) VALUES(" + nextMRID + "," + globals.user.UID
                     + "," + globals.TID + "," + globals.CUID + ","
                     + globals.PDTG + ",'Team member join request "
