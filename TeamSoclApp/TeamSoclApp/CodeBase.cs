@@ -34,6 +34,15 @@ namespace TeamSoclApp
         {
             if (globals.SqlExec.register() == true)
             {
+                // INPUT VALIDATION
+                globals.user.EMail = 
+                globals.user.FName =
+                globals.user.LName = 
+                globals.user.RNumber =
+                globals.user.PhoneNumber = 
+                globals.user.Privacy = 
+                globals.user.PWord =
+                // INPUT VALIDATION
 
                 //registry message
                 return true;
