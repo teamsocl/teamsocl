@@ -9,13 +9,49 @@ namespace TeamSoclApp
 {
     public class SqlUnderbelly
     {
-        public void connreset()
+        public void connreset()  // reset SQL connection
         {
             globals.SqlConn.conn.Close();
             globals.SqlConn.conn.Open();
         }
 
-        public bool getdtg()
+        // <MESSAGING>
+
+        public bool fillmr1()
+        {
+            if (getcurmrid1() == false) return false;
+            
+
+            int nextMRID = globals.MRID1;
+            nextMRID++;
+
+            try
+            {
+                globals.SqlConn.cmd = new SqlCommand("INSERT INTO [dbo].[mr1] "
+                    + "([mrid1],[uid],[tid],[cuid],[pdtg],[edtg],[subject]" 
+                    + ",[content]) VALUES(" + nextMRID + "," + globals.user.UID
+                    + "," + globals.TID + "," + globals.CUID + ","
+                    + globals.PDTG + ",'Team member join request "
+                    + "on TeamSocl','Hello " + globals.player.FName
+                    + ", the TeamSocl member "+ globals.user.FName
+                    + " " + globals.user.LName + " would like to join " 
+                    + "your team, the " + globals.TNAME + "s.  Please "
+                    + "log into TeamSocl to accept this player.    " 
+                    + " V/r TeamSocl')", globals.SqlConn.conn);
+                globals.SqlConn.cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        // </MESSAGING>
+
+        public bool getdtg()  // Gets the DTG from SQL Server
         {
             string dtg = "";
 
@@ -169,7 +205,81 @@ namespace TeamSoclApp
             return true;
         }
 
-        public bool is1in2row3(string value, string table, string rowname)
+        public bool jointeam() // place globals.user data into a team's table.
+        {
+            try
+            {
+                globals.SqlConn.cmd = new SqlCommand("INSERT INTO [dbo].[z" 
+                    + globals.TNAME.ToLower() + "] ([uid],[first_name]," 
+                    + "[last_name],[roster_num],[nickname],[phone],[email]" 
+                    + ",[privacy],[approved]) VALUES(" + globals.user.UID
+                    + ",'" + globals.user.FName + "','" + globals.user.LName
+                    + "'," + globals.user.RNumber + ",'" + globals.user.NName
+                    + "'," + globals.user.PhoneNumber + ",'" + globals.user.EMail 
+                    + "'," + globals.user.Privacy + ",0)", globals.SqlConn.conn);
+                globals.SqlConn.cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool tidtocuid() // takes globals.TID and returns cuid to globals.CUID
+        {
+
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [coach_uid] FROM [dbo].[teams] WHERE [tid] = " + globals.TID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.CUID = globals.SqlConn.reader.GetInt16(0);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool tidtotname() // takes globals.TID and returns team name to globals.TNAME
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [team_name] FROM [dbo].[teams] WHERE [tid] = " + globals.TID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.TNAME = globals.SqlConn.reader.GetString(0);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool is1in2row3(string value, string table, string rowname) // Is Var1 in Var2 Table, Row Var3
         {
             connreset();
 
@@ -198,7 +308,7 @@ namespace TeamSoclApp
             return exists;
         }
 
-        public bool login()
+        public bool login() // corresponds with code.login and MainWindo
         {
             connreset();
 
@@ -225,9 +335,9 @@ namespace TeamSoclApp
             }
 
             return true;
-        } // corresponds with code.login and MainWindow
+        }
 
-        public bool register()
+        public bool register() // corresponds with code.register and Register
         {
 
             is1in2row3(globals.player.EMail, "security", "email");
@@ -264,9 +374,46 @@ namespace TeamSoclApp
                 return false;
             }
             return true;
-        } // corresponds with code.register and Register
+        }
 
-        public bool user_populate()
+        public bool player_populate()  // Populates globals.player for the current globals.player.UID
+        {
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [first_name],[last_name],[nickname]" +
+                    ",[email],[roster_num],[admin],[tids1],[tids2],[tids3],[tids4]" +
+                    ",[phone] FROM [dbo].[users] WHERE [uid] = " + globals.player.UID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.player.FName = globals.SqlConn.reader.GetString(0);
+                    globals.player.LName = globals.SqlConn.reader.GetString(1);
+                    globals.player.NName = globals.SqlConn.reader.GetString(2);
+                    globals.player.EMail = globals.SqlConn.reader.GetString(3);
+                    globals.player.RNumber = globals.SqlConn.reader.GetInt32(4);
+                    globals.player.Admin = globals.SqlConn.reader.GetBoolean(5);
+                    globals.player.TID1 = globals.SqlConn.reader.GetInt32(6);
+                    globals.player.TID2 = globals.SqlConn.reader.GetInt32(7);
+                    globals.player.TID3 = globals.SqlConn.reader.GetInt32(8);
+                    globals.player.TID4 = globals.SqlConn.reader.GetInt32(9);
+                    globals.player.PhoneNumber = globals.SqlConn.reader.GetInt64(10);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return true;
+        } 
+
+        public bool user_populate()  // Populates globals.user for the localuser's dataset
         {
             connreset();
 

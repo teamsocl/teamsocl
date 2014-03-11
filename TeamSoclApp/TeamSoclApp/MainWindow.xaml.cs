@@ -51,7 +51,7 @@ namespace TeamSoclApp
             {
                 if (globals.code.user_populate() == false)
                 {
-                    MessageBox.Show("You've entered an invalid Email or Password\nor you're not connected to the internet");
+                    MessageBox.Show("Connection error!");
                 }
 
                 Dashboard dash = new Dashboard();

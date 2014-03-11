@@ -18,19 +18,33 @@ namespace TeamSoclApp
             return false;
         }
 
-        public bool register()
+        public bool jointeam() // joins a team based on applying global.user to team ID'd by global.TID
+        {
+            if (globals.SqlExec.tidtocuid() == false) return false; //gets CUID
+            globals.player.UID = globals.CUID;
+            if (globals.SqlExec.tidtotname() == false) return false; //gets team's name
+            if (globals.SqlExec.player_populate() == false) return false; //pulls coach data
+            if (globals.SqlExec.jointeam() == false) return false; //joins globals.user to team's table provisionally
+            if (globals.messager.fillmr1() == false) return false; //writes the mr1 table message
+
+            return true;
+        }
+
+        public bool register(int teamid)
         {
             if (globals.SqlExec.register() == true)
             {
-                //meesage register 1 creation and submission...
+
+                //registry message
+                return true;
             }
             return false;
         }
 
         public bool user_populate()
         {
-            if (globals.SqlExec.login() == true) return true;
-            return false;
+            if (globals.SqlExec.user_populate() == false) return false;
+            return true;
         }
     }
 }
