@@ -4,16 +4,15 @@
         Title="RegisterUser" Height="675" Width="864.179">
     <Grid>
         <Button Content="Button" HorizontalAlignment="Left" Height="37" Margin="665,546,0,0" VerticalAlignment="Top" Width="146"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="50,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
-        <TextBox HorizontalAlignment="Left" Height="55" Margin="50,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
-        <TextBox HorizontalAlignment="Left" Height="52" Margin="50,210,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
-        <TextBox HorizontalAlignment="Left" Height="64" Margin="50,301,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="201"/>
-        <TextBox HorizontalAlignment="Left" Height="46" Margin="50,401,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="218"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="542,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
-        <TextBox HorizontalAlignment="Left" Height="52" Margin="566,132,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="245"/>
-        <TextBox HorizontalAlignment="Left" Height="55" Margin="566,234,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="245"/>
-        <TextBox HorizontalAlignment="Left" Height="63" Margin="542,332,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
-        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Height="25" Margin="72,528,0,0" VerticalAlignment="Top" Width="24"/>
+        <TextBox x:Name="register_first_n" HorizontalAlignment="Left" Height="36" Margin="50,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" Text="first name"/>
+        <TextBox x:Name="register_jersey_num" HorizontalAlignment="Left" Height="55" Margin="50,116,0,0" TextWrapping="Wrap" Text="jersey number" VerticalAlignment="Top" Width="189"/>
+        <TextBox x:Name="register_phone" HorizontalAlignment="Left" Height="52" Margin="50,210,0,0" TextWrapping="Wrap" Text="phone number" VerticalAlignment="Top" Width="189"/>
+        <TextBox x:Name="register_pwd" HorizontalAlignment="Left" Height="64" Margin="50,301,0,0" TextWrapping="Wrap" Text="password" VerticalAlignment="Top" Width="201"/>
+        <TextBox x:Name="register_last_n" HorizontalAlignment="Left" Height="36" Margin="542,41,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="226"/>
+        <TextBox x:Name="register_nickname" HorizontalAlignment="Left" Height="52" Margin="566,132,0,0" TextWrapping="Wrap" Text="nickname" VerticalAlignment="Top" Width="245"/>
+        <TextBox x:Name="register_email" HorizontalAlignment="Left" Height="55" Margin="566,234,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Width="245"/>
+        <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="63" Margin="542,332,0,0" TextWrapping="Wrap" Text="password confirm" VerticalAlignment="Top" Width="226"/>
+        <CheckBox x:Name="register_privacy_opt" Content="CheckBox" HorizontalAlignment="Left" Height="25" Margin="72,528,0,0" VerticalAlignment="Top" Width="24"/>
 
     </Grid>
 </Window>
