@@ -15,7 +15,7 @@
         <TextBox x:Name="login_email_input" HorizontalAlignment="Left" Height="25" Margin="230,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243"/>
         <TextBox x:Name="login_password_input" HorizontalAlignment="Left" Height="25" Margin="230,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="243" RenderTransformOrigin="0.453,-0.437"/>
         <Button Content="Login" HorizontalAlignment="Left" Margin="398,429,0,0" VerticalAlignment="Top" Width="75" Height="22" Click="Button_Click"/>
-        <TextBlock x:Name="login_registr_link" HorizontalAlignment="Left" Height="22" Margin="230,429,0,0" TextWrapping="Wrap" Text="Not Registered? Click here." VerticalAlignment="Top" Width="163" TextDecorations="Underline" MouseDown="Register_Click"/>
+        <TextBlock x:Name="login_registr_link" HorizontalAlignment="Left" Height="22" Margin="230,429,0,0" TextWrapping="Wrap" Text="Not Registered? Click here." VerticalAlignment="Top" Width="163" MouseDown="Register_Click" Foreground="#FF0404F0"/>
 
     </Grid>
 </Window>
