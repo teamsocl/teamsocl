@@ -1,8 +1,19 @@
 ﻿<Window x:Class="TeamSoclApp.RegisterUser"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RegisterUser" Height="675" Width="300">
+        Title="RegisterUser" Height="675" Width="864.179">
     <Grid>
-        
+        <Button Content="Button" HorizontalAlignment="Left" Height="37" Margin="665,546,0,0" VerticalAlignment="Top" Width="146"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="50,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
+        <TextBox HorizontalAlignment="Left" Height="55" Margin="50,116,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
+        <TextBox HorizontalAlignment="Left" Height="52" Margin="50,210,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="189"/>
+        <TextBox HorizontalAlignment="Left" Height="64" Margin="50,301,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="201"/>
+        <TextBox HorizontalAlignment="Left" Height="46" Margin="50,401,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="218"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="542,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+        <TextBox HorizontalAlignment="Left" Height="52" Margin="566,132,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="245"/>
+        <TextBox HorizontalAlignment="Left" Height="55" Margin="566,234,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="245"/>
+        <TextBox HorizontalAlignment="Left" Height="63" Margin="542,332,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="226"/>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Height="25" Margin="72,528,0,0" VerticalAlignment="Top" Width="24"/>
+
     </Grid>
 </Window>
