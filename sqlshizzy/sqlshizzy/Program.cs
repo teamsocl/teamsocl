@@ -29,6 +29,12 @@ namespace TeamSoclApp
                 }
                 else
                     Console.WriteLine("MR2, Nothing Found");
+                if (SqlConn.checkmwelcmessage() == true)
+                {
+                    SqlConn.sendmwelcMessage();
+                }
+                else
+                    Console.WriteLine("Mwelc, Nothing Found");
 
 
                 System.Threading.Thread.Sleep(5000);

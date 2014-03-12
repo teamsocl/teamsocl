@@ -55,31 +55,20 @@ namespace TeamSoclApp
 
             return dtg;
         }
-
+        //MR1 Messaging Methods
         public bool checkmr1message()
         {
             conn.Open();
 
             cmd = new SqlCommand("SELECT [subject] FROM [dbo].[mr1]", conn);
             reader = cmd.ExecuteReader();
-            string check = "";
-            try
-            {
-                while (reader.Read())
-                {
-                    check = reader.GetString(0);
-                }
-                reader.Close();
-            }
 
-            catch (Exception e)
-            { excepter(e); }
+            if (reader.HasRows == false)
+            { conn.Close(); reader.Close(); return false; }
 
+            reader.Close();
             conn.Close();
-
-            if (check.Length > 0) return true;
-            return false;
-       
+            return true;
 
         }
 
@@ -98,8 +87,8 @@ namespace TeamSoclApp
             {
                 while (reader.Read())
                 {
-                    to = reader.GetInt32(1);
-                    from = reader.GetInt32(3);
+                    from = reader.GetInt32(1);
+                    to = reader.GetInt32(3);
                     SUBJECT = reader.GetString(5);
                     MESSAGE = reader.GetString(6);
                 }
@@ -115,7 +104,7 @@ namespace TeamSoclApp
             ClearMr1MessageTop();
             Console.WriteLine("MR1 Cleaned up");
             
-            mailer.emailer(uidToEmail(to), uidToEmail(from), SUBJECT, MESSAGE);
+            mailer.emailer(uidToEmail(from), uidToEmail(to), SUBJECT, MESSAGE);
         }
 
         public void ClearMr1MessageTop()
@@ -139,31 +128,20 @@ namespace TeamSoclApp
            
 
         }
-       
+       //MR2 Message methods
         public bool checkmr2message()
         {
             conn.Open();
 
             cmd = new SqlCommand("SELECT [subject] FROM [dbo].[mr2]", conn);
             reader = cmd.ExecuteReader();
-            string check = "";
-            try
-            {
-                while (reader.Read())
-                {
-                    check = reader.GetString(0);
-                }
-                reader.Close();
-            }
 
-            catch (Exception e)
-            { excepter(e); }
+            if (reader.HasRows == false)
+            { conn.Close(); reader.Close(); return false; }
 
+            reader.Close();
             conn.Close();
-
-            if (check.Length > 0) return true;
-            return false;
-
+            return true;
 
         }
 
@@ -182,8 +160,8 @@ namespace TeamSoclApp
             {
                 while (reader.Read())
                 {
-                    to = reader.GetInt32(1);
-                    from = reader.GetInt32(3);
+                    from = reader.GetInt32(1);
+                    to = reader.GetInt32(3);
                     SUBJECT = reader.GetString(5);
                     MESSAGE = reader.GetString(6);
                 }
@@ -199,7 +177,7 @@ namespace TeamSoclApp
             ClearMr2MessageTop();
             Console.WriteLine("MR2 Cleaned up");
 
-            mailer.emailer(uidToEmail(to), uidToEmail(from), SUBJECT, MESSAGE);
+            mailer.emailer(uidToEmail(from), uidToEmail(to), SUBJECT, MESSAGE);
         }
 
         public void ClearMr2MessageTop()
@@ -223,12 +201,89 @@ namespace TeamSoclApp
 
 
         }
+
+
+        //MWelc Message methods
+        public bool checkmwelcmessage()
+        {
+            conn.Open();
+
+            cmd = new SqlCommand("SELECT [uid] FROM [dbo].[mwelc]", conn);
+            reader = cmd.ExecuteReader();
+            
+            if (reader.HasRows == false)
+            { conn.Close(); reader.Close(); return false; }
+
+            reader.Close();
+            conn.Close();
+            return true;
+
+        }
+
+        public void sendmwelcMessage()
+        {
+            conn.Open();
+            int to = 0;
+
+            cmd = new SqlCommand("SELECT * FROM [dbo].[mwelc]", conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    to = reader.GetInt32(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            // get toos name and put it in string name
+
+            string NAME = uidToName(to);
+
+            string MESSAGE = "Hey "+ NAME + ", Thanks for joining TeamSocl!";
+            string SUBJECT = "Welcome to TeamSocl!";
+
+            conn.Close();
+            Console.WriteLine(to.ToString() + SUBJECT + MESSAGE);
+            //Clear out the mwelc table message
+            ClearmwelcMessageTop();
+            Console.WriteLine("MWelc Cleaned up");
+
+            mailer.emailer("Teamsocl@outlook.com", uidToEmail(to) , SUBJECT, MESSAGE);
+        }
+
+        public void ClearmwelcMessageTop()
+        {
+            conn.Open();
+
+
+            cmd = new SqlCommand("DELETE TOP (1) FROM [dbo].[mwelc]", conn);
+
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+
+
+        }
         
         //Common Tools 
 
 
         public string uidToEmail(int uid)
         {
+            conn.Close();
             conn.Open();
             string email = "";
 
@@ -250,6 +305,32 @@ namespace TeamSoclApp
             conn.Close();
 
             return email;
+        }
+        
+        public string uidToName(int uid)
+        {
+            conn.Close();
+            conn.Open();
+            string name = "";
+
+            cmd = new SqlCommand("SELECT [first_name] FROM [dbo].[users] WHERE [uid]=" + uid, conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    name = reader.GetString(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+
+            return name;
         }
     }
 }
