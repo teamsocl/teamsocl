@@ -30,26 +30,20 @@ namespace TeamSoclApp
             return true;
         }
 
-        public bool register(int teamid)
+        public bool register()
         {
-            if (globals.SqlExec.register() == true)
-            {
-                globals.user.TID1 = 0;
-                globals.user.TID2 = 0;
-                globals.user.TID3 = 0;
-                globals.user.TID3 = 0;
-                globals.user.Admin = false;
+            globals.user.TID1 = 0;
+            globals.user.TID2 = 0;
+            globals.user.TID3 = 0;
+            globals.user.TID3 = 0;
+            globals.user.Admin = false;
 
-                // globals.user.UID is filled in REGISTER DUE TO NEED TO PULL UID SWIFTLY!!!!
-
-                //registry message
-                return true;
-            }
+            if (globals.SqlExec.register() == true) return true;
             return false;
         }
 
         public bool user_populate()
-        {
+        { 
             if (globals.SqlExec.user_populate() == false) return false;
             return true;
         }

@@ -28,27 +28,27 @@ namespace TeamSoclApp
         {
             // INPUT VALIDATION
             if (true) // if (inputvalidation(register_email.Text, 0) == true) 
-            { globals.user.EMail = register_email.Text; }
+            { globals.player.EMail = register_email.Text; }
             else
             { MessageBox.Show("Your email was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_first_n.Text, 1) == true) 
-            { globals.user.FName = register_first_n.Text; }
+            { globals.player.FName = register_first_n.Text; }
             else
             { MessageBox.Show("Your first name was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_last_n.Text, 1) == true) 
-            { globals.user.LName = register_last_n.Text; }
+            { globals.player.LName = register_last_n.Text; }
             else
             { MessageBox.Show("Your last name was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_jersey_num, 2) == true) 
-            { globals.user.RNumber = Convert.ToInt16(register_jersey_num); }
+            { globals.player.RNumber = Convert.ToInt16(register_jersey_num); }
             else 
             { MessageBox.Show("Your roster number was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_phone, 3) == true) 
-            { globals.user.PhoneNumber = Convert.ToDouble(register_phone); }
+            { globals.player.PhoneNumber = Convert.ToDouble(register_phone); }
             else
             { MessageBox.Show("Your phone number was entered incorrectly!"); return; }
 
@@ -58,14 +58,15 @@ namespace TeamSoclApp
             {
                 if (true) // if (inputvalidation(register_pwd, 4) == true
                 {
-                    globals.user.PWord = register_pwd.Text;
+                    globals.player.PWord = register_pwd.Text;
+                    globals.code.register();
                 }
             }
             else
             {
                 MessageBox.Show("Your passwords do not match!");
             }
-            // INPUT VALIDATION
+            
         }
     }
 }
