@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "teamsocl", "sqlshizzy\teamsocl.csproj", "{49764792-92F6-4561-9C49-233FC9E2AFEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A6FBEEA-E4F4-491C-A3FC-932A089C3EDC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSoclApp", "TeamSoclApp\TeamSoclApp.csproj", "{FC1C6D8E-8664-4BBD-B677-4B19DB1193FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{49764792-92F6-4561-9C49-233FC9E2AFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49764792-92F6-4561-9C49-233FC9E2AFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49764792-92F6-4561-9C49-233FC9E2AFEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC1C6D8E-8664-4BBD-B677-4B19DB1193FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC1C6D8E-8664-4BBD-B677-4B19DB1193FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC1C6D8E-8664-4BBD-B677-4B19DB1193FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC1C6D8E-8664-4BBD-B677-4B19DB1193FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

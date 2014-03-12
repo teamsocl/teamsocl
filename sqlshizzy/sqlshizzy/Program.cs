@@ -11,10 +11,18 @@ namespace TeamSoclApp
 {
     class Program
     {
+        public static SqlOverhead SqlConn = new SqlOverhead();
         
         static void Main(string[] args)
         {
-            //teamsocl.EventHandler.Texty();
+            do
+            {
+                
+
+                System.Threading.Thread.Sleep(5000);
+                //Wait 5 seconds
+            }
+            while (true);           
         }
     }
 }
