@@ -28,7 +28,7 @@ namespace TeamSoclApp
         {
             //MessageBox.Show("wassup");
             // INPUT VALIDATION
-            if (true) // if (inputvalidation(register_email.Text, 0) == true) 
+            if (true) // if (globals.inputvalidation(register_email.Text, 0) == true) 
             { globals.player.EMail = register_email.Text; }
             else
             { MessageBox.Show("Your email was entered incorrectly!"); return; }

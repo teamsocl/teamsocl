@@ -279,6 +279,32 @@ namespace TeamSoclApp
             return true;
         }
 
+        public string tidtotname(int TID) // takes globals.TID and returns team name to globals.TNAME
+        {
+            string TIDNAME = "";
+            connreset();
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [team_name] FROM [dbo].[teams] WHERE [tid] = " + TID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    globals.TNAME = globals.SqlConn.reader.GetString(0);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return "ERROR";
+            }
+            return TIDNAME;
+        }
+
         public bool is1in2row3(string value, string table, string rowname) // Is Var1 in Var2 Table, Row Var3
         {
             connreset();

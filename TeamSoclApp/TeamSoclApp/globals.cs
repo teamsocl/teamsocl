@@ -18,6 +18,7 @@ namespace TeamSoclApp
 
         public static Emailer mailer = new Emailer();
         public static Messages messager = new Messages();
+        //public static InputValidation validator = new InputValidation();
 
         public static CodeBase code = new CodeBase();
 
