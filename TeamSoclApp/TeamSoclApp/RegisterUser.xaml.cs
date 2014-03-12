@@ -43,12 +43,12 @@ namespace TeamSoclApp
             { MessageBox.Show("Your last name was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_jersey_num, 2) == true) 
-            { globals.player.RNumber = Convert.ToInt16(register_jersey_num); }
+            { globals.player.RNumber = Convert.ToInt16(register_jersey_num.Text); }
             else 
             { MessageBox.Show("Your roster number was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_phone, 3) == true) 
-            { globals.player.PhoneNumber = Convert.ToDouble(register_phone); }
+            { globals.player.PhoneNumber = Convert.ToDouble(register_phone.Text); }
             else
             { MessageBox.Show("Your phone number was entered incorrectly!"); return; }
 
@@ -59,7 +59,7 @@ namespace TeamSoclApp
                 if (true) // if (inputvalidation(register_pwd, 4) == true
                 {
                     globals.player.PWord = register_pwd.Text;
-                    globals.code.register();
+                    if (globals.code.register() == true) MessageBox.Show("Thanks for registering!\nYou'll recieve an email to confirm your account shortly!"); 
                 }
             }
             else
