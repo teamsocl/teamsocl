@@ -11,7 +11,7 @@
         <TextBox x:Name="register_last_n" HorizontalAlignment="Left" Height="36" Margin="566,41,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="245"/>
         <TextBox x:Name="register_nickname" HorizontalAlignment="Left" Height="52" Margin="566,132,0,0" TextWrapping="Wrap" Text="nickname" VerticalAlignment="Top" Width="245"/>
         <TextBox x:Name="register_email" HorizontalAlignment="Left" Height="55" Margin="566,234,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Width="245"/>
-        <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="63" Margin="542,332,0,0" TextWrapping="Wrap" Text="password confirm" VerticalAlignment="Top" Width="226"/>
+        <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="31" Margin="542,332,0,0" TextWrapping="Wrap" Text="password confirm" VerticalAlignment="Top" Width="226"/>
         <CheckBox x:Name="register_privacy_opt" Content="Privacy option" HorizontalAlignment="Left" Height="25" Margin="72,528,0,0" VerticalAlignment="Top" Width="217" IsThreeState="True"/>
 
     </Grid>
