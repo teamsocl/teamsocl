@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RegisterUser" Height="800" Width="1000" Icon="Teamsocl.ico">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Height="37" Margin="665,546,0,0" VerticalAlignment="Top" Width="146"/>
+        <Button Content="Register" HorizontalAlignment="Left" Height="37" Margin="665,546,0,0" VerticalAlignment="Top" Width="146" Click="Register_Button"/>
         <TextBox x:Name="register_first_n" HorizontalAlignment="Left" Height="36" Margin="50,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" Text="first name"/>
         <TextBox x:Name="register_jersey_num" HorizontalAlignment="Left" Height="27" Margin="50,116,0,0" TextWrapping="Wrap" Text="jersey number" VerticalAlignment="Top" Width="189"/>
         <TextBox x:Name="register_phone" HorizontalAlignment="Left" Height="30" Margin="50,210,0,0" TextWrapping="Wrap" Text="phone number" VerticalAlignment="Top" Width="189"/>

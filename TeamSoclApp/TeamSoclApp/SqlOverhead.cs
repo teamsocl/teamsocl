@@ -26,8 +26,8 @@ namespace TeamSoclApp
         {
             //return bit1 + server + bit3 + database + bit3 + 5 + uid + bit7 + password;
             // return "Server=localhost\\SQLEXPRESS;Database=teamsocl;UID=sa;PWD=testserver"; // MSSA LAB Zane's desktop
-            //return "Server=10.33.36.70;Database=teamsocl;UID=sa;PWD=testserver"; // MSSA LAB CLIENT
-            return "Server=localhost;Database=teamsocl;UID=sa;PWD=testserver"; // Zane's laptop
+            return "Server=10.33.36.70;Database=teamsocl;UID=sa;PWD=testserver"; // MSSA LAB CLIENT
+            //return "Server=localhost;Database=teamsocl;UID=sa;PWD=testserver"; // Zane's laptop
 
             //return "Server=localhost;Database=teamsocl;User Id=sa;PWD=team12socl34"; //LEXIT
         }

@@ -339,9 +339,6 @@ namespace TeamSoclApp
 
         public bool register() // corresponds with code.register and Register
         {
-
-            is1in2row3(globals.player.EMail, "security", "email");
-
             if (getcuruid() == false) return false;
 
             int nextUID = globals.UID;
@@ -355,7 +352,7 @@ namespace TeamSoclApp
                     + ",[phone],[email],[tids1],[tids2],[tids3],[tids4]) VALUES"
                     + "(" + nextUID + ",'" + globals.player.FName + "','"
                     + globals.player.LName + "'," + globals.player.RNumber
-                    + ",'" + globals.player.NName + "',1,"
+                    + ",'" + globals.player.NName + "',0,"
                     + globals.player.PhoneNumber + ",'" + globals.player.EMail
                     + "',0,0,0,0)", globals.SqlConn.conn);
                 globals.SqlConn.cmd.ExecuteNonQuery();
