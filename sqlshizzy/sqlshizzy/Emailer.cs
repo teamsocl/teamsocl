@@ -9,7 +9,7 @@ namespace TeamSoclApp
 {
     public class Emailer
     {
-        public bool emailer(string from, string to, string subject, string body)
+        public void emailer(string from, string to, string subject, string body)
         {
 
 
@@ -45,7 +45,7 @@ namespace TeamSoclApp
 
             try
             {
-                Console.WriteLine("start to send email ...");
+                Console.WriteLine("start to {0} send email ...", to);
                 oSmtp.SendMail(oServer, oMail);
                 Console.WriteLine("email was sent successfully!");
             }
@@ -53,9 +53,9 @@ namespace TeamSoclApp
             {
                 Console.WriteLine("failed to send email with the following error:");
                 Console.WriteLine(ep.Message);
-                return false;
+                
             }
-            return true;
+            
         }
     }
 }

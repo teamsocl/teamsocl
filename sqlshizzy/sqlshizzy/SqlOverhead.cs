@@ -12,6 +12,8 @@ namespace TeamSoclApp
         public SqlConnection conn = new SqlConnection(ConnString());  //UID=sa;PWD=testserver
         public SqlCommand cmd;
         public SqlDataReader reader;
+        public Emailer mailer = new Emailer();
+        
 
         static string ConnString()
         {
@@ -54,19 +56,18 @@ namespace TeamSoclApp
             return dtg;
         }
 
-        public void getmr1message(int mrid)
+        public bool checkmr1message()
         {
             conn.Open();
 
-            cmd = new SqlCommand("SELECT [subject] FROM [dbo].[mr1] WHERE [mrid1] = " + mrid, conn);
+            cmd = new SqlCommand("SELECT [subject] FROM [dbo].[mr1]", conn);
             reader = cmd.ExecuteReader();
-
+            string check = "";
             try
             {
                 while (reader.Read())
                 {
-                    Console.WriteLine(reader.GetString(0));
-                    Console.ReadKey();
+                    check = reader.GetString(0);
                 }
                 reader.Close();
             }
@@ -76,7 +77,179 @@ namespace TeamSoclApp
 
             conn.Close();
 
+            if (check.Length > 0) return true;
+            return false;
+       
+
         }
 
+        public void sendMr1Message()
+        {
+            conn.Open();
+            int to=0, from=0;
+
+            string MESSAGE = "";
+            string SUBJECT = "";
+
+            cmd = new SqlCommand("SELECT * FROM [dbo].[mr1]", conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    to = reader.GetInt32(1);
+                    from = reader.GetInt32(3);
+                    SUBJECT = reader.GetString(5);
+                    MESSAGE = reader.GetString(6);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+            Console.WriteLine(to.ToString() + from.ToString() + SUBJECT + MESSAGE);
+            //Clear out the MR1 table message
+            ClearMr1MessageTop();
+            Console.WriteLine("MR1 Cleaned up");
+            
+            mailer.emailer(uidToEmail(to), uidToEmail(from), SUBJECT, MESSAGE);
+        }
+
+        public void ClearMr1MessageTop()
+        {
+            conn.Open();
+            
+
+            cmd = new SqlCommand("DELETE TOP (1) FROM [dbo].[mr1]", conn);
+            
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+           
+
+        }
+       
+        public bool checkmr2message()
+        {
+            conn.Open();
+
+            cmd = new SqlCommand("SELECT [subject] FROM [dbo].[mr2]", conn);
+            reader = cmd.ExecuteReader();
+            string check = "";
+            try
+            {
+                while (reader.Read())
+                {
+                    check = reader.GetString(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+
+            if (check.Length > 0) return true;
+            return false;
+
+
+        }
+
+        public void sendMr2Message()
+        {
+            conn.Open();
+            int to = 0, from = 0;
+
+            string MESSAGE = "";
+            string SUBJECT = "";
+
+            cmd = new SqlCommand("SELECT * FROM [dbo].[mr2]", conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    to = reader.GetInt32(1);
+                    from = reader.GetInt32(3);
+                    SUBJECT = reader.GetString(5);
+                    MESSAGE = reader.GetString(6);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+            Console.WriteLine(to.ToString() + from.ToString() + SUBJECT + MESSAGE);
+            //Clear out the MR2 table message
+            ClearMr2MessageTop();
+            Console.WriteLine("MR2 Cleaned up");
+
+            mailer.emailer(uidToEmail(to), uidToEmail(from), SUBJECT, MESSAGE);
+        }
+
+        public void ClearMr2MessageTop()
+        {
+            conn.Open();
+
+
+            cmd = new SqlCommand("DELETE TOP (1) FROM [dbo].[mr2]", conn);
+
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+
+
+        }
+        
+        //Common Tools 
+
+
+        public string uidToEmail(int uid)
+        {
+            conn.Open();
+            string email = "";
+
+            cmd = new SqlCommand("SELECT [email] FROM [dbo].[users] WHERE [uid]="+uid, conn);
+            reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    email = reader.GetString(0);
+                }
+                reader.Close();
+            }
+
+            catch (Exception e)
+            { excepter(e); }
+
+            conn.Close();
+
+            return email;
+        }
     }
 }

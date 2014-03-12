@@ -17,7 +17,19 @@ namespace TeamSoclApp
         {
             do
             {
-                
+                if (SqlConn.checkmr1message() == true)
+                {
+                    SqlConn.sendMr1Message();
+                }
+                else
+                    Console.WriteLine("MR1, Nothing Found");
+                if (SqlConn.checkmr2message() == true)
+                {
+                    SqlConn.sendMr2Message();
+                }
+                else
+                    Console.WriteLine("MR2, Nothing Found");
+
 
                 System.Threading.Thread.Sleep(5000);
                 //Wait 5 seconds
