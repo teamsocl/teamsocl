@@ -20,9 +20,9 @@ namespace TeamSoclApp
         public bool fillmr1()
         {
             if (getcurmrid1() == false) return false;
-            
 
             int nextMRID = globals.MRID1;
+            
             nextMRID++;
 
             try
