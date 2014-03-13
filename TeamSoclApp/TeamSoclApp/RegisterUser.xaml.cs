@@ -33,42 +33,41 @@ namespace TeamSoclApp
             else
             { MessageBox.Show("Your email was entered incorrectly!"); return; }
 
-            MessageBox.Show("tohere1");
             if (globals.SqlExec.is1in2row3(globals.player.EMail, "security", "email") == true)
             { MessageBox.Show("This email already exists!"); return; }
 
-            MessageBox.Show("tohere2");
             if (true) // if (inputvalidation(register_first_n.Text, 1) == true) 
             { globals.player.FName = register_first_n.Text; }
             else
             { MessageBox.Show("Your first name was entered incorrectly!"); return; }
 
-            MessageBox.Show("tohere3");
             if (true) // if (inputvalidation(register_last_n.Text, 1) == true) 
             { globals.player.LName = register_last_n.Text; }
             else
             { MessageBox.Show("Your last name was entered incorrectly!"); return; }
 
-            MessageBox.Show("tohere4");
+            if (true) // if (inputvalidation(register_nickname.Text, 1) == true) 
+            { globals.player.NName = register_nickname.Text; }
+            else
+            { MessageBox.Show("Your nick name was entered incorrectly!"); return; }
+
             if (true) // if (inputvalidation(register_jersey_num, 2) == true) 
             { globals.player.RNumber = Convert.ToInt16(register_jersey_num.Text); }
             else
             { MessageBox.Show("Your roster number was entered incorrectly!"); return; }
 
-            MessageBox.Show("tohere5");
             if (true) // if (inputvalidation(register_phone, 3) == true) 
             { globals.player.PhoneNumber = Convert.ToDouble(register_phone.Text); }
             else
             { MessageBox.Show("Your phone number was entered incorrectly!"); return; }
 
-            MessageBox.Show("tohere6");
             if (register_pwd.Text == register_pwd_confirm.Text)  // && inputvalidation(register_pwd) == true)
             {
-                MessageBox.Show("gothere7");
                 if (true) // if (inputvalidation(register_pwd, 4) == true
                 {
                     globals.player.PWord = register_pwd.Text;
                     if (globals.code.register() == true) MessageBox.Show("Thanks for registering!\nYou'll recieve an email to confirm your account shortly!");
+                    this.Close();
                 }
             }
             else

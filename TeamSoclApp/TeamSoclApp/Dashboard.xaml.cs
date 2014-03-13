@@ -45,22 +45,21 @@ namespace TeamSoclApp
         {
             List<ItemsInfo> lst = new List<ItemsInfo>();
 
-            lst.Add(new ItemsInfo("Messages", "Messages go here", "Red"));
-            lst.Add(new ItemsInfo("Teams", "Teams listed here", "Red"));
-
-            MessageBox.Show(globals.SqlExec.tidtotname(globals.user.TID1));
+            lst.Add(new ItemsInfo("Messages", "Messages go here", "Red", "tab1"));
+            
+            lst.Add(new ItemsInfo("Teams", "Teams listed here", "Red", "tab2"));
 
             if (globals.user.TID1 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID1), "Team Data here", "Brown")); }
+            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID1), "Team Data here", "Brown", "tab3")); }
 
             if (globals.user.TID2 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID2), "Team Data Here", "Brown")); }
+            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID2), "Team Data Here", "Brown", "tab4")); }
             
             if (globals.user.TID3 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID3), "Team Data Here", "Brown")); }
+            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID3), "Team Data Here", "Brown", "tab5")); }
             
             if (globals.user.TID4 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID4), "Team Data Here", "Brown")); }
+            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID4), "Team Data Here", "Brown", "tab6")); }
             
             tabControl.ItemsSource = lst;
             tabControl.SelectedIndex = 0;

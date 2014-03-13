@@ -291,7 +291,7 @@ namespace TeamSoclApp
             {
                 while (globals.SqlConn.reader.Read())
                 {
-                    globals.TNAME = globals.SqlConn.reader.GetString(0);
+                    TIDNAME = globals.SqlConn.reader.GetString(0);
                 }
 
                 globals.SqlConn.reader.Close();
