@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.ComponentModel;
 using System.Text;
@@ -25,13 +27,12 @@ namespace TeamSoclApp
 
         public Dashboard()
         {
-            InitializeComponent();
+            //worker_init();
+            InitializeComponent();   
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            worker_init();
-
             if (globals.user.TIDs[0] != 0)
             { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.user.teamnames[0]; }
 
@@ -44,35 +45,54 @@ namespace TeamSoclApp
             if (globals.user.TIDs[3] != 0)
             { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.user.teamnames[3]; }
 
+            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
         }
 
-        private void worker_init()
-        {
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            worker.RunWorkerAsync();
-        }
+        //private void worker_init()
+        //{
+            
+        //    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+        //    worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+        //    worker.RunWorkerAsync();
+        //}
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            for (int i = 0; i <= 3; i++ )
-            {
-                globals.SqlExec.pullteam(globals.user.teamnames, i);
-            }
-        }
+        //private void worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+           
 
-        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //foreach (DataRow row in globals.teamtable[1].Rows)
-            {
+        //}
 
-            }
-            //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
-            //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
-            //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+        //private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
 
-            //hide cover pannels...
-        }
+
+
+        //    //for (int i = 0; i < globals.teamtable[0].Rows.Count; i++)
+        //    //{
+        //    //    DataRow dr = teamtable[0].Rows[i];
+        //    //    ListViewItem listitem = new ListViewItem(dr["pk_Location_ID"].ToString());
+        //    //    listitem.SubItems.Add(dr["var_Location_Name"].ToString());
+        //    //    listitem.SubItems.Add(dr["fk_int_District_ID"].ToString());
+        //    //    listitem.SubItems.Add(dr["fk_int_Company_ID"].ToString());
+        //    //    listView1.Items.Add(listitem);
+        //    //} 
+
+        //    //foreach (DataRow row in globals.teamtable[0].Rows)
+        //    //{
+        //    //    ListViewItem item = new ListViewItem(row[0].ToString());
+        //    //    for (int i = 1; i < globals.teamtable[0].Columns.Count; i++)
+        //    //    {
+        //    //        item.SubItems.Add(row[i].ToString());
+        //    //    }
+        //    //    T1ListView.Items.Add(item);
+        //    //}
+
+        //    //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+        //    //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+        //    //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+
+        //    //hide cover pannels...
+        //}
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
@@ -84,6 +104,9 @@ namespace TeamSoclApp
                     + globals.user.UID + " CONTAINS THE FOLLOWING: "
                     + Convert.ToString(globals.error));
             }
+            // ERROR HANDLING!!!
+            MessageBox.Show(globals.error.ToString());
+            // ERROR HANDLING END!!!
             Owner.Show();
             globals.flush();
             this.Close();

@@ -1,24 +1,28 @@
-﻿<Window x:Class="TeamSoclApp.Dashboard"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TeamSoclApp" x:Class="TeamSoclApp.Dashboard"
         Loaded="Window_Loaded"
         Title="TeamSocl Dashboard" Height="522" Width="592.825">
     <Grid>
         <Button x:Name="Logout" Content="Log Out" HorizontalAlignment="Left" Margin="500,3,0,0" VerticalAlignment="Top" Width="75" Click="Logout_Click" Height="60"/>
         <StackPanel x:Name ="MessagePannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
-            <Label>Messages go here</Label>
+            <Label Content="Messages go here"/>
         </StackPanel>
         <StackPanel x:Name="TeamsPannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
-            <Label>Teams go here</Label>
+            <Label Content="Teams go here"/>
         </StackPanel>
         <StackPanel x:Name="Team1Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485">
-            <Label>team1 data here</Label>
+            <Label Content="team1 data here"/>
             <Border x:Name="T1Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
                 <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
-                    <ListView x:Name="T1ListView">
+                    <ListView Name="T1ListView">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
+                                <GridViewColumn Header="Phone #" DisplayMemberBinding="{Binding phone}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -26,19 +30,19 @@
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team2Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
-            <Label>team2 data here</Label>
+            <Label Content="team2 data here"/>
             <Border x:Name="T2Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
                 <Border x:Name="T2Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team3Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
-            <Label>team3 data here</Label>
+            <Label Content="team3 data here"/>
             <Border x:Name="T3Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
                 <Border x:Name="T3Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team4Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
-            <Label>team4 data here</Label>
+            <Label Content="team4 data here"/>
             <Border x:Name="T4Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
                 <Border x:Name="T4Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
             </Border>
