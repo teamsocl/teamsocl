@@ -473,20 +473,50 @@ namespace TeamSoclApp
             }
 
             for (int i = 0; i <= 3; i++)
-            { globals.user.teamnames[i] = globals.SqlExec.tidtotname(globals.user.TIDs[i]); }
+            {
+                if (globals.user.TIDs[i] != 0)
+                {
+                    globals.user.teamnames[i] = globals.SqlExec.tidtotname(globals.user.TIDs[i]);
+                    globals.SqlExec.pullteam(i);
 
+                }
+            }
             return true;
         }
 
-        public bool pullteam(string[] TeamName, int tnum)
+
+        public bool pullteam(int inum)
         {
-            globals.SqlConn.dataadapter = new SqlDataAdapter("SELECT * FROM [dbo].[z" + TeamName[tnum] + "]", globals.SqlConn.conn);
+            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
+            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
 
             connreset();
 
             try
             {
-                globals.SqlConn.dataadapter.Fill(globals.teamtable[tnum]);
+                switch(inum)
+                {
+                    case 0:
+                    {
+                        globals.SqlConn.dataadapter.Fill(globals.teamtable1);
+                        break;
+                    }
+                    case 1:
+                    {
+                        globals.SqlConn.dataadapter.Fill(globals.teamtable2);
+                        break;
+                    }
+                    case 2:
+                    {
+                        globals.SqlConn.dataadapter.Fill(globals.teamtable3);
+                        break;
+                    }
+                    case 3:
+                    {
+                        globals.SqlConn.dataadapter.Fill(globals.teamtable4);
+                        break;
+                    }
+                }   
             }
             catch (Exception e)
             {

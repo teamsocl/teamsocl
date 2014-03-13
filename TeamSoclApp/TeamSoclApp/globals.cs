@@ -13,8 +13,14 @@ namespace TeamSoclApp
 
         public static UserPersona user = new UserPersona();
         public static Persona player = new Persona();
-        public static DataTable[] teamtable = new DataTable[4];
+
+        public static DataTable[] teamtables = new DataTable[4];
         
+        public static DataTable teamtable1 = new DataTable();
+        public static DataTable teamtable2 = new DataTable();
+        public static DataTable teamtable3 = new DataTable();
+        public static DataTable teamtable4 = new DataTable();
+
         public static SqlOverhead SqlConn = new SqlOverhead();
         public static SqlUnderbelly SqlExec = new SqlUnderbelly();
 

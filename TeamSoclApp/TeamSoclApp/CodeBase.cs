@@ -44,8 +44,11 @@ namespace TeamSoclApp
         }
 
         public bool user_populate()
-        { 
-            if (globals.SqlExec.user_populate() == false) return false;
+        {
+            if (globals.SqlExec.user_populate() == false)
+            {
+                return false;
+            }
             return true;
         }
     }
