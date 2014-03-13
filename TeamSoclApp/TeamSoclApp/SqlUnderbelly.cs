@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,7 @@ namespace TeamSoclApp
         }
 
         // </MESSAGING>
+        // <TOOLS>
 
         public bool getdtg()  // Gets the DTG from SQL Server
         {
@@ -205,6 +207,35 @@ namespace TeamSoclApp
             return true;
         }
 
+        public bool is1in2row3(string value, string table, string rowname) // Is Var1 in Var2 Table, Row Var3
+        {
+            connreset();
+
+            bool exists = false;
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["
+                + table + "] WHERE [" + rowname + "] = '" + value
+                + "'", globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    if (globals.SqlConn.reader.GetInt32(0) >= 1) exists = true;
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+                return false;
+            }
+            return exists;
+        }
+
         public bool jointeam() // place globals.user data into a team's table.
         {
             try
@@ -305,34 +336,8 @@ namespace TeamSoclApp
             return TIDNAME;
         }
 
-        public bool is1in2row3(string value, string table, string rowname) // Is Var1 in Var2 Table, Row Var3
-        {
-            connreset();
-
-            bool exists = false;
-
-            globals.SqlConn.cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["
-                + table + "] WHERE [" + rowname + "] = '" + value 
-                + "'", globals.SqlConn.conn);
-            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
-
-            try
-            {
-                while (globals.SqlConn.reader.Read())
-                {
-                    if (globals.SqlConn.reader.GetInt32(0) >= 1) exists = true;
-                }
-
-                globals.SqlConn.reader.Close();
-            }
-
-            catch (Exception e)
-            {
-                globals.error.Append(" ERROR: " + e);
-                return false;
-            }
-            return exists;
-        }
+        // </TOOLS>
+        // <METHODS>
 
         public bool login() // corresponds with code.login and MainWindo
         {
@@ -418,10 +423,8 @@ namespace TeamSoclApp
                     globals.player.EMail = globals.SqlConn.reader.GetString(3);
                     globals.player.RNumber = globals.SqlConn.reader.GetInt32(4);
                     globals.player.Admin = globals.SqlConn.reader.GetBoolean(5);
-                    globals.player.TID1 = globals.SqlConn.reader.GetInt32(6);
-                    globals.player.TID2 = globals.SqlConn.reader.GetInt32(7);
-                    globals.player.TID3 = globals.SqlConn.reader.GetInt32(8);
-                    globals.player.TID4 = globals.SqlConn.reader.GetInt32(9);
+                    for (int i = 0; i <= 3; i++)
+                    { globals.player.TIDs[i] = globals.SqlConn.reader.GetInt32(i + 6); }
                     globals.player.PhoneNumber = globals.SqlConn.reader.GetInt64(10);
                 }
 
@@ -455,10 +458,8 @@ namespace TeamSoclApp
                     globals.user.EMail = globals.SqlConn.reader.GetString(3);
                     globals.user.RNumber = globals.SqlConn.reader.GetInt32(4);
                     globals.user.Admin = globals.SqlConn.reader.GetBoolean(5);
-                    globals.user.TID1 = globals.SqlConn.reader.GetInt32(6);
-                    globals.user.TID2 = globals.SqlConn.reader.GetInt32(7);
-                    globals.user.TID3 = globals.SqlConn.reader.GetInt32(8);
-                    globals.user.TID4 = globals.SqlConn.reader.GetInt32(9);
+                    for (int i = 0; i <= 3; i++)
+                    { globals.user.TIDs[i] = globals.SqlConn.reader.GetInt32(i + 6); }
                     globals.user.PhoneNumber = globals.SqlConn.reader.GetInt64(10);
                 }
 
@@ -470,8 +471,31 @@ namespace TeamSoclApp
                 globals.error.Append(" ERROR: " + e);
                 return false;
             }
-            return true;
-        } 
 
+            for (int i = 0; i <= 3; i++)
+            { globals.user.teamnames[i] = globals.SqlExec.tidtotname(globals.user.TIDs[i]); }
+
+            return true;
+        }
+
+        public bool pullteam(string[] TeamName, int tnum)
+        {
+            globals.SqlConn.dataadapter = new SqlDataAdapter("SELECT * FROM [dbo].[z" + TeamName[tnum] + "]", globals.SqlConn.conn);
+
+            connreset();
+
+            try
+            {
+                globals.SqlConn.dataadapter.Fill(globals.teamtable[tnum]);
+            }
+            catch (Exception e)
+            {
+                globals.error.Append(" D.A. ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        // </METHODS>
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,9 @@ namespace TeamSoclApp
     {
         // class block
 
-        public static Persona user = new Persona();
+        public static UserPersona user = new UserPersona();
         public static Persona player = new Persona();
+        public static DataTable[] teamtable = new DataTable[4];
         
         public static SqlOverhead SqlConn = new SqlOverhead();
         public static SqlUnderbelly SqlExec = new SqlUnderbelly();
@@ -44,7 +46,7 @@ namespace TeamSoclApp
 
         public static void flush()
         {
-            user = new Persona();
+            user = new UserPersona();
             player = new Persona();
         }
 

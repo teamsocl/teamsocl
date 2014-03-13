@@ -32,10 +32,11 @@ namespace TeamSoclApp
 
         public bool register()
         {
-            globals.player.TID1 = 0;
-            globals.player.TID2 = 0;
-            globals.player.TID3 = 0;
-            globals.player.TID3 = 0;
+            for (int i = 0; i <= 3; i++ )
+            {
+                globals.player.TIDs[i] = 0;
+            }
+
             globals.player.Admin = false;
 
             if (globals.SqlExec.register() == true) return true;

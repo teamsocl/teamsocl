@@ -14,7 +14,15 @@
         <StackPanel x:Name="Team1Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485">
             <Label>team1 data here</Label>
             <Border x:Name="T1Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
-                <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
+                <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
+                    <ListView x:Name="T1ListView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team2Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">

@@ -8,8 +8,9 @@ namespace TeamSoclApp
 {
     public class Persona
     {
+        public int[] TIDs = new int[4];
         private string firstName, lastName, nickName, eMail, passWord;
-        private int rosterNumber, uID, tID1, tID2, tID3, tID4;
+        private int rosterNumber, uID;
         private double phoneNumber;
         private bool admin, privacy;
 
@@ -24,6 +25,10 @@ namespace TeamSoclApp
             this.uID = 0;
             this.phoneNumber = 0000000000;
             this.admin = false;
+            for( int i = 0; i<=3 ; i++ )
+            {
+                TIDs[i] = 0;
+            }
         }
 
         public string FName
@@ -66,30 +71,6 @@ namespace TeamSoclApp
         {
             get { return uID; }
             set { uID = value; }
-        }
-
-        public int TID1
-        {
-            get { return tID1; }
-            set { tID1 = value; }
-        }
-
-        public int TID2
-        {
-            get { return tID2; }
-            set { tID2 = value; }
-        }
-
-        public int TID3
-        {
-            get { return tID3; }
-            set { tID3 = value; }
-        }
-
-        public int TID4
-        {
-            get { return tID4; }
-            set { tID4 = value; }
         }
 
         public double PhoneNumber

@@ -30,26 +30,20 @@ namespace TeamSoclApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<ItemsInfo> lst = new List<ItemsInfo>();
-
-            //visibility of stackpannels set to nothing!
-
-            if (globals.user.TID1 != 0)
-            { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.SqlExec.tidtotname(globals.user.TID1); }
-
-            if (globals.user.TID2 != 0)
-            { Team2Button.Visibility = System.Windows.Visibility.Visible; Team2Button.Content = globals.SqlExec.tidtotname(globals.user.TID2); }
-            
-            if (globals.user.TID3 != 0)
-            { Team3Button.Visibility = System.Windows.Visibility.Visible; Team3Button.Content = globals.SqlExec.tidtotname(globals.user.TID3); }
-            
-            if (globals.user.TID4 != 0)
-            { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.SqlExec.tidtotname(globals.user.TID4); }
-            
-            //tabControl.ItemsSource = lst;
-            //tabControl.SelectedIndex = 0;
-
             worker_init();
+
+            if (globals.user.TIDs[0] != 0)
+            { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.user.teamnames[0]; }
+
+            if (globals.user.TIDs[1] != 0)
+            { Team2Button.Visibility = System.Windows.Visibility.Visible; Team2Button.Content = globals.user.teamnames[1]; }
+            
+            if (globals.user.TIDs[2] != 0)
+            { Team3Button.Visibility = System.Windows.Visibility.Visible; Team3Button.Content = globals.user.teamnames[2]; }
+            
+            if (globals.user.TIDs[3] != 0)
+            { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.user.teamnames[3]; }
+
         }
 
         private void worker_init()
@@ -61,15 +55,18 @@ namespace TeamSoclApp
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //Get team1 data
-            //Get team2 data
-            //Get team3 data
-            //Get team4 data
+            for (int i = 0; i <= 3; i++ )
+            {
+                globals.SqlExec.pullteam(globals.user.teamnames, i);
+            }
         }
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //Team1_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1).ToString();
+            //foreach (DataRow row in globals.teamtable[1].Rows)
+            {
+
+            }
             //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);

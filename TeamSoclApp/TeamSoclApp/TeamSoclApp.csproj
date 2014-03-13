@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="SqlOverhead.cs" />
     <Compile Include="SqlUnderbelly.cs" />
+    <Compile Include="UserPersona.cs" />
     <Compile Include="weather.cs" />
     <Compile Include="WPFCustoClasses.cs" />
     <Page Include="About.xaml">

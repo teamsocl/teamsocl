@@ -12,6 +12,9 @@ namespace TeamSoclApp
         public SqlConnection conn = new SqlConnection(ConnString());
         public SqlCommand cmd;
         public SqlDataReader reader;
+        public SqlDataAdapter dataadapter;
+        
+
 
         public string bit1 = "Server=";
         //private string server = "";        // bit 2
