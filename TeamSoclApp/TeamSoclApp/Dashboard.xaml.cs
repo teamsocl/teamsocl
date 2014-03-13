@@ -84,27 +84,49 @@ namespace TeamSoclApp
 
         private void MessagesButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            PannelClear(1);
         }
 
         private void TeamsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            PannelClear(2);
         }
 
         private void Team1Button_Click(object sender, RoutedEventArgs e)
         {
+            PannelClear(3);
+        }
 
+        private void Team2Button_Click(object sender, RoutedEventArgs e)
+        {
+            PannelClear(4);
+        }
+
+        private void Team3Button_Click(object sender, RoutedEventArgs e)
+        {
+            PannelClear(5);
+        }
+
+        private void Team4Button_Click(object sender, RoutedEventArgs e)
+        {
+            PannelClear(6);
         }
 
         public void PannelClear(int activepannel)
         {
-            if (activepannel != 1) MessagePannel.Visibility == System.Windows.Visibility.Visible;
-            if (activepannel != 2)  Visibility == System.Windows.Visibility.Visible;
-            if (activepannel != 3) MessagePannel.Visibility == System.Windows.Visibility.Visible;
-            if (activepannel != 4) MessagePannel.Visibility == System.Windows.Visibility.Visible;
-            if (activepannel != 5) MessagePannel.Visibility == System.Windows.Visibility.Visible;
-            if (activepannel != 6) MessagePannel.Visibility == System.Windows.Visibility.Visible;
+
+            if (activepannel == 1) MessagePannel.Visibility = System.Windows.Visibility.Visible;
+            else { MessagePannel.Visibility = System.Windows.Visibility.Hidden; }
+            if (activepannel == 2) TeamsPannel.Visibility = System.Windows.Visibility.Visible;
+            else { TeamsPannel.Visibility = System.Windows.Visibility.Hidden; }
+            if (activepannel == 3) Team1Pannel.Visibility = System.Windows.Visibility.Visible;
+            else { Team1Pannel.Visibility = System.Windows.Visibility.Hidden; }
+            if (activepannel == 4) Team2Pannel.Visibility = System.Windows.Visibility.Visible;
+            else { Team2Pannel.Visibility = System.Windows.Visibility.Hidden; }
+            if (activepannel == 5) Team3Pannel.Visibility = System.Windows.Visibility.Visible;
+            else { Team3Pannel.Visibility = System.Windows.Visibility.Hidden; }
+            if (activepannel == 6) Team4Pannel.Visibility = System.Windows.Visibility.Visible;
+            else { Team4Pannel.Visibility = System.Windows.Visibility.Hidden; }
         }
     }
 }
