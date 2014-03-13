@@ -66,8 +66,13 @@ namespace TeamSoclApp
                 if (true) // if (inputvalidation(register_pwd, 4) == true
                 {
                     globals.player.PWord = register_pwd.Text;
-                    if (globals.code.register() == true) MessageBox.Show("Thanks for registering!\nYou'll recieve an email to confirm your account shortly!");
-                    this.Close();
+                    if (globals.code.register() == true)
+                    {
+                        MessageBox.Show("Thanks for registering!\nYou'll recieve an email to confirm your account shortly!");
+                        this.Close();
+                    }
+                    else
+                    { MessageBox.Show("Error!"); }
                 }
             }
             else

@@ -45,24 +45,22 @@ namespace TeamSoclApp
         {
             List<ItemsInfo> lst = new List<ItemsInfo>();
 
-            lst.Add(new ItemsInfo("Messages", "Messages go here", "Red", "tab1"));
-            
-            lst.Add(new ItemsInfo("Teams", "Teams listed here", "Red", "tab2"));
+            //visibility of stackpannels set to nothing!
 
             if (globals.user.TID1 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID1), "Team Data here", "Brown", "tab3")); }
+            { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.SqlExec.tidtotname(globals.user.TID1); }
 
             if (globals.user.TID2 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID2), "Team Data Here", "Brown", "tab4")); }
+            { Team2Button.Visibility = System.Windows.Visibility.Visible; Team2Button.Content = globals.SqlExec.tidtotname(globals.user.TID2); }
             
             if (globals.user.TID3 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID3), "Team Data Here", "Brown", "tab5")); }
+            { Team3Button.Visibility = System.Windows.Visibility.Visible; Team3Button.Content = globals.SqlExec.tidtotname(globals.user.TID3); }
             
             if (globals.user.TID4 != 0)
-            { lst.Add(new ItemsInfo(globals.SqlExec.tidtotname(globals.user.TID4), "Team Data Here", "Brown", "tab6")); }
+            { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.SqlExec.tidtotname(globals.user.TID4); }
             
-            tabControl.ItemsSource = lst;
-            tabControl.SelectedIndex = 0;
+            //tabControl.ItemsSource = lst;
+            //tabControl.SelectedIndex = 0;
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
@@ -82,6 +80,31 @@ namespace TeamSoclApp
             //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+        }
+
+        private void MessagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void TeamsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Team1Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void PannelClear(int activepannel)
+        {
+            if (activepannel != 1) MessagePannel.Visibility == System.Windows.Visibility.Visible;
+            if (activepannel != 2)  Visibility == System.Windows.Visibility.Visible;
+            if (activepannel != 3) MessagePannel.Visibility == System.Windows.Visibility.Visible;
+            if (activepannel != 4) MessagePannel.Visibility == System.Windows.Visibility.Visible;
+            if (activepannel != 5) MessagePannel.Visibility == System.Windows.Visibility.Visible;
+            if (activepannel != 6) MessagePannel.Visibility == System.Windows.Visibility.Visible;
         }
     }
 }

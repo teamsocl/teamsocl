@@ -8,21 +8,18 @@ namespace TeamSoclApp
 {
     public class ItemsInfo
     {
-        public ItemsInfo(String title, String description, String color, String tabname)
+        public ItemsInfo(String tabheader, String color1, String color2)
         {
-            Title = title;
-            Description = description;
-            Color = color;
-            TabName = tabname;
+            TabHeader = tabheader;
+            Color1 = color1;
+            Color2 = color2;
         }
 
-        public String Title
+        public String TabHeader
         { get; set; }
-        public String Description
+        public String Color1
         { get; set; }
-        public String Color
-        { get; set; }
-        public String TabName
+        public String Color2
         { get; set; }
     }
 }
