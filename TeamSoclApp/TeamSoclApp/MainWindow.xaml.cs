@@ -59,7 +59,7 @@ namespace TeamSoclApp
                 dash.Show();
                 this.Hide();
 
-                MessageBox.Show(globals.forecast.wx("98597") + "\n" +globals.forecast.wx("98597",1));
+                MessageBox.Show(globals.forecast.wx("98433") + "\n" + globals.forecast.wx("98433", 1) + "\n" + globals.forecast.wx("98433", 2) + "\n" + globals.forecast.wx("98433", 3));
             }
             else
             { MessageBox.Show("You've entered an invalid Email or Password\nor you're not connected to the internet"); }
