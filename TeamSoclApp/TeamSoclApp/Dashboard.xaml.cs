@@ -21,24 +21,11 @@ namespace TeamSoclApp
     /// </summary>
     public partial class Dashboard : Window
     {
+        public BackgroundWorker worker = new BackgroundWorker();
+
         public Dashboard()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if ( Convert.ToString(globals.error).Length>=5)
-            {
-                globals.mailer.emailer("teamsocl@outlook.com",
-                    "teamsocl@outlook.com", "ERROR LOG FOR "
-                    + globals.user.UID, "ERROR LOG FOR UID "
-                    + globals.user.UID + " CONTAINS THE FOLLOWING: " 
-                    + Convert.ToString(globals.error));
-            }
-            Owner.Show();
-            globals.flush();
-            this.Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,7 +49,11 @@ namespace TeamSoclApp
             //tabControl.ItemsSource = lst;
             //tabControl.SelectedIndex = 0;
 
-            BackgroundWorker worker = new BackgroundWorker();
+            worker_init();
+        }
+
+        private void worker_init()
+        {
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
@@ -70,8 +61,10 @@ namespace TeamSoclApp
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //throw new NotImplementedException();
-            // get data here
+            //Get team1 data
+            //Get team2 data
+            //Get team3 data
+            //Get team4 data
         }
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -80,37 +73,42 @@ namespace TeamSoclApp
             //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
             //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
+
+            //hide cover pannels...
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            if (Convert.ToString(globals.error).Length >= 5)
+            {
+                globals.mailer.emailer("teamsocl@outlook.com",
+                    "teamsocl@outlook.com", "ERROR LOG FOR "
+                    + globals.user.UID, "ERROR LOG FOR UID "
+                    + globals.user.UID + " CONTAINS THE FOLLOWING: "
+                    + Convert.ToString(globals.error));
+            }
+            Owner.Show();
+            globals.flush();
+            this.Close();
         }
 
         private void MessagesButton_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(1);
-        }
+        { PannelClear(1); }
 
         private void TeamsButton_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(2);
-        }
+        { PannelClear(2); }
 
         private void Team1Button_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(3);
-        }
+        { PannelClear(3); }
 
         private void Team2Button_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(4);
-        }
+        { PannelClear(4); }
 
         private void Team3Button_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(5);
-        }
+        { PannelClear(5); }
 
         private void Team4Button_Click(object sender, RoutedEventArgs e)
-        {
-            PannelClear(6);
-        }
+        { PannelClear(6); }
 
         public void PannelClear(int activepannel)
         {
