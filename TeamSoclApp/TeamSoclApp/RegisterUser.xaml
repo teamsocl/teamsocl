@@ -9,7 +9,7 @@
         <ImageBrush ImageSource="Team_Social_register.png" TileMode="Tile"/>
     </Window.Background>
     <Grid>
-        <Button Content="Register" HorizontalAlignment="Left" Height="37" Margin="579,575,0,0" VerticalAlignment="Top" Width="146" Click="Register_Button"/>
+        <Button Content="Register" HorizontalAlignment="Left" Height="37" Margin="561,575,0,0" VerticalAlignment="Top" Width="120" Click="Register_Button"/>
         <TextBox x:Name="register_first_n" HorizontalAlignment="Left" Height="25" Margin="107,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="first name"/>
         <TextBox x:Name="register_jersey_num" HorizontalAlignment="Left" Height="25" Margin="418,253,0,0" TextWrapping="Wrap" Text="jersey number" VerticalAlignment="Top" Width="190"/>
         <TextBox x:Name="register_phone" HorizontalAlignment="Left" Height="25" Margin="107,302,0,0" TextWrapping="Wrap" Text="phone number" VerticalAlignment="Top" Width="190"/>
@@ -18,8 +18,9 @@
         <TextBox x:Name="register_nickname" HorizontalAlignment="Left" Height="25" Margin="418,204,0,0" TextWrapping="Wrap" Text="nickname" VerticalAlignment="Top" Width="190"/>
         <TextBox x:Name="register_email" HorizontalAlignment="Left" Height="25" Margin="107,351,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Width="190"/>
         <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="25" Margin="418,402,0,0" TextWrapping="Wrap" Text="password confirm" VerticalAlignment="Top" Width="190"/>
-        <CheckBox x:Name="register_privacy_opt" Content="Privacy Option&#xA;&#xA;Check this box if you want information sharing to be restricted to the Team &#xA;Captain, rather than all teammates. " HorizontalAlignment="Left" Height="72" Margin="107,451,0,0" VerticalAlignment="Top" Width="440" IsThreeState="True"/>
+        <CheckBox x:Name="register_privacy_opt" Content="Privacy Option&#xA;&#xA;Check this box if you want information sharing to be restricted to the Team Captain, rather than &#xD;&#xA;allow all teammates access to your contact information. " HorizontalAlignment="Left" Height="72" Margin="107,451,0,0" VerticalAlignment="Top" Width="525" IsThreeState="True"/>
         <TextBox x:Name="register_email_confirm" HorizontalAlignment="Left" Height="25" Margin="418,351,0,0" TextWrapping="Wrap" Text="email confirm" VerticalAlignment="Top" Width="190"/>
+        <Button x:Name="register_cancel" Content="Cancel" HorizontalAlignment="Left" Height="37" Margin="386,575,0,0" VerticalAlignment="Top" Width="120" Click="register_cancel_Click"/>
 
     </Grid>
 </Window>

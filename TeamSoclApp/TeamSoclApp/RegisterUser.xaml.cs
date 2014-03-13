@@ -49,7 +49,7 @@ namespace TeamSoclApp
             if (true) // if (inputvalidation(register_nickname.Text, 1) == true) 
             { globals.player.NName = register_nickname.Text; }
             else
-            { MessageBox.Show("Your nick name was entered incorrectly!"); return; }
+            { MessageBox.Show("Your nickname was entered incorrectly!"); return; }
 
             if (true) // if (inputvalidation(register_jersey_num, 2) == true) 
             { globals.player.RNumber = Convert.ToInt16(register_jersey_num.Text); }
@@ -80,6 +80,11 @@ namespace TeamSoclApp
                 MessageBox.Show("Your passwords do not match!");
             }
             
+        }
+
+        private void register_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
