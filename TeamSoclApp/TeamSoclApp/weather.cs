@@ -36,5 +36,33 @@ namespace TeamSoclApp
             }
             return answer;
         }
+
+        public string wx(string zip1, int daysfromnow)  // weather function to be implemented in full later - 90%
+        {
+            string answer = "";
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("http://xml.weather.yahoo.com/forecastrss?p=" + zip1);
+
+            // Set up namespace manager for XPath  
+            XmlNamespaceManager ns = new XmlNamespaceManager(doc.NameTable);
+            ns.AddNamespace("yweather", "http://xml.weather.yahoo.com/ns/rss/1.0");
+
+            // Get forecast with XPath  
+            XmlNodeList nodes = doc.SelectNodes("/rss/channel/item/yweather:forecast", ns);
+
+            try
+            {
+                answer = "The Weather for " + zip1 + ": " + nodes[daysfromnow].Attributes["day"].InnerText + ": " +
+                    nodes[daysfromnow].Attributes["text"].InnerText + ", " +
+                    nodes[daysfromnow].Attributes["low"].InnerText + "F - " +
+                    nodes[daysfromnow].Attributes["high"].InnerText + "F\n";
+            }
+            catch (Exception)
+            {
+                answer = "Weather Service not availible that many days out!";
+            }
+            return answer;
+        }
     }
 }
