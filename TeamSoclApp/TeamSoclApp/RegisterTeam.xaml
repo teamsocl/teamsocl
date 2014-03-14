@@ -1,8 +1,14 @@
-﻿<Window x:Class="TeamSoclApp.RegisterTeam"
+﻿<Window x:Name="register_team_window" x:Class="TeamSoclApp.RegisterTeam"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RegisterTeam" Height="300" Width="300">
+        Title="Register Team" Height="384" Width="430" Icon="Teamsocl.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="Team_Social.png"/>
+    </Window.Background>
     <Grid>
-        
+        <Button x:Name="register_team_submit" Content="Submit" HorizontalAlignment="Left" Margin="302,319,0,0" VerticalAlignment="Top" Width="100" Height="25"/>
+        <Button x:Name="register_team_cancel" Content="Cancel" HorizontalAlignment="Left" Margin="175,319,0,10" Width="100"/>
+        <TextBox x:Name="register_team_name" HorizontalAlignment="Left" Height="25" Margin="235,247,0,0" TextWrapping="Wrap" Text="Team Name" VerticalAlignment="Top" Width="167"/>
+
     </Grid>
 </Window>
