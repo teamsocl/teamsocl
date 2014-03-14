@@ -508,7 +508,7 @@ namespace TeamSoclApp
                         pullteamcoach(i);
                     }
                     else
-                    { pullteam1(i); pullteam2(i); }
+                    { pullteam(i); }
 
                 }
             }
@@ -516,12 +516,12 @@ namespace TeamSoclApp
         }
 
 
-        public bool pullteam1(int inum)
+        public bool pullteam(int inum)
         {
-            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 0";
-            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
-
             connreset();
+
+            string cmdstrng = "SELECT [first_name],[last_name],[nickname],[roster_num] FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 0";
+            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
 
             try
             {
@@ -554,49 +554,64 @@ namespace TeamSoclApp
                 globals.error.Append(" D.A. ERROR: " + e);
                 return false;
             }
+
+            enumteamtable(inum);
+            
             return true;
         }
 
-        public bool pullteam2(int inum)
+        public void enumteamtable(int inum)
         {
-            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 1";
-            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
+            int rownum = 0;
 
             connreset();
 
+            string cmdstrng = "SELECT COUNT([UID]) FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
+
+            globals.SqlConn.cmd = new SqlCommand(cmdstrng, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
             try
             {
-                switch (inum)
+                while (globals.SqlConn.reader.Read())
                 {
-                    case 0:
-                        {
-                            globals.SqlConn.dataadapter.Update(globals.teamtable1);
-                            break;
-                        }
-                    case 1:
-                        {
-                            globals.SqlConn.dataadapter.Update(globals.teamtable2);
-                            break;
-                        }
-                    case 2:
-                        {
-                            globals.SqlConn.dataadapter.Update(globals.teamtable3);
-                            break;
-                        }
-                    case 3:
-                        {
-                            globals.SqlConn.dataadapter.Update(globals.teamtable4);
-                            break;
-                        }
+                    rownum = globals.SqlConn.reader.GetInt16(0);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                globals.error.Append("Sometimes they dont have any privates on their team!");
-                return false;
+                globals.error.Append("ERROR: " + e);
             }
-            return true;
+
+            // 2nd half
+
+            connreset();
+
+            globals.tableUIDs[inum] = new int[rownum];
+
+            cmdstrng = "SELECT [UID] FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
+
+            globals.SqlConn.cmd = new SqlCommand(cmdstrng, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    for ( int i = 0 ; i<=rownum ; i++ )
+                    {
+                        globals.tableUIDs[inum][i] = globals.SqlConn.reader.GetInt16(0);
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append("ERROR: " + e);
+            }
         }
+
+        // pulls all on coachview
 
         public bool pullteamcoach(int inum)
         {

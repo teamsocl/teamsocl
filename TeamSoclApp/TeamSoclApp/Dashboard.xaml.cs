@@ -37,43 +37,42 @@ namespace TeamSoclApp
             Loading_Teams.Visibility = System.Windows.Visibility.Visible;
 
             if (globals.user.TIDs[0] != 0)
-            { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.user.teamnames[0]; }
+            { Team1Button.Visibility = System.Windows.Visibility.Visible;
+                Team1Button.Content = globals.user.teamnames[0]; }
 
             if (globals.user.TIDs[1] != 0)
-            { Team2Button.Visibility = System.Windows.Visibility.Visible; Team2Button.Content = globals.user.teamnames[1]; }
+            { Team2Button.Visibility = System.Windows.Visibility.Visible; 
+                Team2Button.Content = globals.user.teamnames[1]; }
             
             if (globals.user.TIDs[2] != 0)
-            { Team3Button.Visibility = System.Windows.Visibility.Visible; Team3Button.Content = globals.user.teamnames[2]; }
+            { Team3Button.Visibility = System.Windows.Visibility.Visible; 
+                Team3Button.Content = globals.user.teamnames[2]; }
             
             if (globals.user.TIDs[3] != 0)
-            { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.user.teamnames[3]; }
+            { Team4Button.Visibility = System.Windows.Visibility.Visible; 
+                Team4Button.Content = globals.user.teamnames[3]; }
 
 
 
             T1ListView.ItemsSource = globals.teamtable1.DefaultView;
             T2ListView.ItemsSource = globals.teamtable2.DefaultView;
             T3ListView.ItemsSource = globals.teamtable3.DefaultView;
+            T4ListView.ItemsSource = globals.teamtable4.DefaultView;
 
-            DataView byah = new DataView(globals.teamtable4, "privacy == 0", string.Empty, DataViewRowState.CurrentRows);
-
-            //T4ListView.ItemsSource = globals.teamtable4.DefaultView;
-            T4ListView.ItemsSource = byah;
         }
 
         private void worker_init()
         {
 
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.RunWorkerCompleted 
+                += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //T1ListView.ItemsSource = globals.teamtable1.DefaultView;
-            //T2ListView.ItemsSource = globals.teamtable2.DefaultView;
-            //T3ListView.ItemsSource = globals.teamtable3.DefaultView;
-            //T4ListView.ItemsSource = globals.teamtable4.DefaultView;
+            //theaded tasks here.
         }
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

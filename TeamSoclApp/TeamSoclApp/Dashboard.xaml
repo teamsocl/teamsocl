@@ -19,10 +19,10 @@
                     <ListView Name="T1ListView">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding last_name}"/>
+                                <GridViewColumn Header="Nick Name" DisplayMemberBinding="{Binding nickname}"/>
                                 <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
-                                <GridViewColumn Header="Phone #" DisplayMemberBinding="{Binding phone}"/>
-                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

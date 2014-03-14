@@ -9,6 +9,12 @@ namespace TeamSoclApp
 {
     public static class globals
     {
+        // values block
+
+        public static int[][] tableUIDs;
+
+        // struct block
+
         // class block
 
         public static UserPersona user = new UserPersona();
