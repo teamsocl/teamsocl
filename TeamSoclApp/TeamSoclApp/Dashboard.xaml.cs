@@ -27,12 +27,13 @@ namespace TeamSoclApp
 
         public Dashboard()
         {
-            //worker_init();
+            worker_init();
             InitializeComponent();   
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Loading_Teams.Visibility = System.Windows.Visibility.Visible;
             if (globals.user.TIDs[0] != 0)
             { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.user.teamnames[0]; }
 
@@ -45,54 +46,28 @@ namespace TeamSoclApp
             if (globals.user.TIDs[3] != 0)
             { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.user.teamnames[3]; }
 
-            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
         }
 
-        //private void worker_init()
-        //{
-            
-        //    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
-        //    worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-        //    worker.RunWorkerAsync();
-        //}
+        private void worker_init()
+        {
 
-        //private void worker_DoWork(object sender, DoWorkEventArgs e)
-        //{
-           
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerAsync();
+        }
 
-        //}
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
+            T2ListView.ItemsSource = globals.teamtable2.DefaultView;
+            T3ListView.ItemsSource = globals.teamtable3.DefaultView;
+            T4ListView.ItemsSource = globals.teamtable4.DefaultView;
+        }
 
-        //private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //{
-
-
-
-        //    //for (int i = 0; i < globals.teamtable[0].Rows.Count; i++)
-        //    //{
-        //    //    DataRow dr = teamtable[0].Rows[i];
-        //    //    ListViewItem listitem = new ListViewItem(dr["pk_Location_ID"].ToString());
-        //    //    listitem.SubItems.Add(dr["var_Location_Name"].ToString());
-        //    //    listitem.SubItems.Add(dr["fk_int_District_ID"].ToString());
-        //    //    listitem.SubItems.Add(dr["fk_int_Company_ID"].ToString());
-        //    //    listView1.Items.Add(listitem);
-        //    //} 
-
-        //    //foreach (DataRow row in globals.teamtable[0].Rows)
-        //    //{
-        //    //    ListViewItem item = new ListViewItem(row[0].ToString());
-        //    //    for (int i = 1; i < globals.teamtable[0].Columns.Count; i++)
-        //    //    {
-        //    //        item.SubItems.Add(row[i].ToString());
-        //    //    }
-        //    //    T1ListView.Items.Add(item);
-        //    //}
-
-        //    //Team2_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
-        //    //Team3_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
-        //    //Team4_GroupBox.Header = globals.SqlExec.tidtotname(globals.user.TID1);
-
-        //    //hide cover pannels...
-        //}
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Loading_Teams.Visibility = System.Windows.Visibility.Hidden;
+        }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {

@@ -61,7 +61,8 @@ namespace TeamSoclApp
             else
             { MessageBox.Show("Your phone number was entered incorrectly!"); return; }
 
-            if (register_pwd.Text == register_pwd_confirm.Text)  // && inputvalidation(register_pwd) == true)
+            if (register_pwd.Text == register_pwd_confirm.Text 
+                && register_email.Text == register_email_confirm.Text)  // && inputvalidation(register_pwd) == true && inputvalidation )
             {
                 if (true) // if (inputvalidation(register_pwd, 4) == true
                 {
@@ -77,7 +78,7 @@ namespace TeamSoclApp
             }
             else
             {
-                MessageBox.Show("Your passwords do not match!");
+                MessageBox.Show("Your passwords or emails do not match!");
             }
             
         }

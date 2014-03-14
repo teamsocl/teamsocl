@@ -12,7 +12,7 @@
         <StackPanel x:Name="TeamsPannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
             <Label Content="Teams go here"/>
         </StackPanel>
-        <StackPanel x:Name="Team1Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485">
+        <StackPanel x:Name="Team1Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
             <Label Content="team1 data here"/>
             <Border x:Name="T1Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
                 <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
@@ -32,19 +32,52 @@
         <StackPanel x:Name="Team2Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
             <Label Content="team2 data here"/>
             <Border x:Name="T2Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
-                <Border x:Name="T2Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
+                <Border x:Name="T2Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
+                    <ListView Name="T2ListView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
+                                <GridViewColumn Header="Phone #" DisplayMemberBinding="{Binding phone}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team3Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
             <Label Content="team3 data here"/>
             <Border x:Name="T3Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
-                <Border x:Name="T3Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
+                <Border x:Name="T3Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
+                    <ListView Name="T3ListView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
+                                <GridViewColumn Header="Phone #" DisplayMemberBinding="{Binding phone}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
             </Border>
         </StackPanel>
         <StackPanel x:Name="Team4Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485" Visibility="Hidden">
             <Label Content="team4 data here"/>
             <Border x:Name="T4Border1" BorderBrush="Black" BorderThickness="5" Height="358" Margin="0,0,10,0">
-                <Border x:Name="T4Border2" BorderBrush="Black" BorderThickness="5" Margin="0"/>
+                <Border x:Name="T4Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
+                    <ListView Name="T4ListView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding first_name}"/>
+                                <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
+                                <GridViewColumn Header="Phone #" DisplayMemberBinding="{Binding phone}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding email}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
             </Border>
         </StackPanel>
         <Button x:Name="MessagesButton" Content="Messages" HorizontalAlignment="Left" Margin="100,460,0,0" VerticalAlignment="Top" Width="65" Click="MessagesButton_Click"/>
@@ -53,6 +86,9 @@
         <Button x:Name="Team2Button" Content="Team2" HorizontalAlignment="Left" Margin="303,460,0,0" VerticalAlignment="Top" Width="90" Click="Team2Button_Click" Visibility="Hidden"/>
         <Button x:Name="Team3Button" Content="Team3" HorizontalAlignment="Left" Margin="394,460,0,0" VerticalAlignment="Top" Width="90" Click="Team3Button_Click" Visibility="Hidden"/>
         <Button x:Name="Team4Button" Content="Team4" HorizontalAlignment="Left" Margin="485,460,0,0" VerticalAlignment="Top" Width="90" Click="Team4Button_Click" Visibility="Hidden"/>
+        <StackPanel x:Name="Loading_Teams" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="475" Background="#FFBDBDBD" Visibility="Hidden">
+            <Label Content="Loading Team Data" Height="27" Margin="180,180,179,0"/>
+        </StackPanel>
 
     </Grid>
 </Window>
