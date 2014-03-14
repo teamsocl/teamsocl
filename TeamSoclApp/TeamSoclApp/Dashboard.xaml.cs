@@ -33,7 +33,9 @@ namespace TeamSoclApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //MessageBox.Show("SELECT * FROM [dbo].[z" + globals.user.teamnames[1].ToString().ToLower() + "]");
             Loading_Teams.Visibility = System.Windows.Visibility.Visible;
+
             if (globals.user.TIDs[0] != 0)
             { Team1Button.Visibility = System.Windows.Visibility.Visible; Team1Button.Content = globals.user.teamnames[0]; }
 
@@ -46,6 +48,16 @@ namespace TeamSoclApp
             if (globals.user.TIDs[3] != 0)
             { Team4Button.Visibility = System.Windows.Visibility.Visible; Team4Button.Content = globals.user.teamnames[3]; }
 
+
+
+            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
+            T2ListView.ItemsSource = globals.teamtable2.DefaultView;
+            T3ListView.ItemsSource = globals.teamtable3.DefaultView;
+
+            DataView byah = new DataView(globals.teamtable4, "privacy == 0", string.Empty, DataViewRowState.CurrentRows);
+
+            //T4ListView.ItemsSource = globals.teamtable4.DefaultView;
+            T4ListView.ItemsSource = byah;
         }
 
         private void worker_init()
@@ -58,10 +70,10 @@ namespace TeamSoclApp
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
-            T2ListView.ItemsSource = globals.teamtable2.DefaultView;
-            T3ListView.ItemsSource = globals.teamtable3.DefaultView;
-            T4ListView.ItemsSource = globals.teamtable4.DefaultView;
+            //T1ListView.ItemsSource = globals.teamtable1.DefaultView;
+            //T2ListView.ItemsSource = globals.teamtable2.DefaultView;
+            //T3ListView.ItemsSource = globals.teamtable3.DefaultView;
+            //T4ListView.ItemsSource = globals.teamtable4.DefaultView;
         }
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

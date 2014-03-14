@@ -285,6 +285,32 @@ namespace TeamSoclApp
             return true;
         }
 
+        public int tidtocuid(int TID) // takes globals.TID and returns cuid to globals.CUID
+        {
+            connreset();
+
+            int CUID = 0;
+
+            globals.SqlConn.cmd = new SqlCommand("SELECT [coach_uid] FROM [dbo].[teams] WHERE [tid] = " + TID, globals.SqlConn.conn);
+            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+
+            try
+            {
+                while (globals.SqlConn.reader.Read())
+                {
+                    CUID = globals.SqlConn.reader.GetInt16(0);
+                }
+
+                globals.SqlConn.reader.Close();
+            }
+
+            catch (Exception e)
+            {
+                globals.error.Append(" ERROR: " + e);
+            }
+            return CUID;
+        }
+
         public bool tidtotname() // takes globals.TID and returns team name to globals.TNAME
         {
             connreset();
@@ -477,7 +503,12 @@ namespace TeamSoclApp
                 if (globals.user.TIDs[i] != 0)
                 {
                     globals.user.teamnames[i] = globals.SqlExec.tidtotname(globals.user.TIDs[i]);
-                    globals.SqlExec.pullteam(i);
+                    if (globals.SqlExec.tidtocuid(globals.user.TIDs[i]) == globals.user.UID)
+                    {
+                        pullteamcoach(i);
+                    }
+                    else
+                    { pullteam1(i); pullteam2(i); }
 
                 }
             }
@@ -485,9 +516,9 @@ namespace TeamSoclApp
         }
 
 
-        public bool pullteam(int inum)
+        public bool pullteam1(int inum)
         {
-            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
+            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 0";
             globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
 
             connreset();
@@ -517,6 +548,88 @@ namespace TeamSoclApp
                         break;
                     }
                 }   
+            }
+            catch (Exception e)
+            {
+                globals.error.Append(" D.A. ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool pullteam2(int inum)
+        {
+            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 1";
+            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
+
+            connreset();
+
+            try
+            {
+                switch (inum)
+                {
+                    case 0:
+                        {
+                            globals.SqlConn.dataadapter.Update(globals.teamtable1);
+                            break;
+                        }
+                    case 1:
+                        {
+                            globals.SqlConn.dataadapter.Update(globals.teamtable2);
+                            break;
+                        }
+                    case 2:
+                        {
+                            globals.SqlConn.dataadapter.Update(globals.teamtable3);
+                            break;
+                        }
+                    case 3:
+                        {
+                            globals.SqlConn.dataadapter.Update(globals.teamtable4);
+                            break;
+                        }
+                }
+            }
+            catch (Exception)
+            {
+                globals.error.Append("Sometimes they dont have any privates on their team!");
+                return false;
+            }
+            return true;
+        }
+
+        public bool pullteamcoach(int inum)
+        {
+            string cmdstrng = "SELECT * FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
+            globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
+
+            connreset();
+
+            try
+            {
+                switch (inum)
+                {
+                    case 0:
+                        {
+                            globals.SqlConn.dataadapter.Fill(globals.teamtable1);
+                            break;
+                        }
+                    case 1:
+                        {
+                            globals.SqlConn.dataadapter.Fill(globals.teamtable2);
+                            break;
+                        }
+                    case 2:
+                        {
+                            globals.SqlConn.dataadapter.Fill(globals.teamtable3);
+                            break;
+                        }
+                    case 3:
+                        {
+                            globals.SqlConn.dataadapter.Fill(globals.teamtable4);
+                            break;
+                        }
+                }
             }
             catch (Exception e)
             {
