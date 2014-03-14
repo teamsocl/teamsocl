@@ -10,17 +10,26 @@
     </Window.Background>
     <Grid>
         <Button Content="Register" HorizontalAlignment="Left" Height="37" Margin="561,575,0,0" VerticalAlignment="Top" Width="120" Click="Register_Button"/>
-        <TextBox x:Name="register_first_n" HorizontalAlignment="Left" Height="25" Margin="107,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="first name"/>
-        <TextBox x:Name="register_jersey_num" HorizontalAlignment="Left" Height="25" Margin="418,253,0,0" TextWrapping="Wrap" Text="jersey number" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_phone" HorizontalAlignment="Left" Height="25" Margin="107,302,0,0" TextWrapping="Wrap" Text="phone number" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_pwd" HorizontalAlignment="Left" Height="25" Margin="107,402,0,0" TextWrapping="Wrap" Text="password" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_last_n" HorizontalAlignment="Left" Height="25" Margin="107,253,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_nickname" HorizontalAlignment="Left" Height="25" Margin="418,204,0,0" TextWrapping="Wrap" Text="nickname" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_email" HorizontalAlignment="Left" Height="25" Margin="107,351,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" Width="190"/>
-        <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="25" Margin="418,402,0,0" TextWrapping="Wrap" Text="password confirm" VerticalAlignment="Top" Width="190"/>
-        <CheckBox x:Name="register_privacy_opt" Content="Privacy Option&#xA;&#xA;Check this box if you want information sharing to be restricted to the Team Captain, rather than &#xD;&#xA;allow all teammates access to your contact information. " HorizontalAlignment="Left" Height="72" Margin="107,451,0,0" VerticalAlignment="Top" Width="525" IsThreeState="True"/>
-        <TextBox x:Name="register_email_confirm" HorizontalAlignment="Left" Height="25" Margin="418,351,0,0" TextWrapping="Wrap" Text="email confirm" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_first_n" HorizontalAlignment="Left" Height="25" Margin="107,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_jersey_num" HorizontalAlignment="Left" Height="25" Margin="491,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_phone" HorizontalAlignment="Left" Height="25" Margin="107,302,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_pwd" HorizontalAlignment="Left" Height="25" Margin="107,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_last_n" HorizontalAlignment="Left" Height="25" Margin="107,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_nickname" HorizontalAlignment="Left" Height="25" Margin="491,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_email" HorizontalAlignment="Left" Height="25" Margin="107,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="register_pwd_confirm" HorizontalAlignment="Left" Height="25" Margin="491,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
+        <CheckBox x:Name="register_privacy_opt" Content="Privacy Option&#xA;&#xA;Check this box if you want information sharing to be restricted to the Team Captain, rather than &#xD;&#xA;allow all teammates access to your contact information. " HorizontalAlignment="Left" Height="72" Margin="22,472,0,0" VerticalAlignment="Top" Width="525" IsThreeState="True"/>
+        <TextBox x:Name="register_email_confirm" HorizontalAlignment="Left" Height="25" Margin="491,351,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
         <Button x:Name="register_cancel" Content="Cancel" HorizontalAlignment="Left" Height="37" Margin="386,575,0,0" VerticalAlignment="Top" Width="120" Click="register_cancel_Click"/>
+        <Label Content="First Name" HorizontalAlignment="Left" Height="25" Margin="22,204,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="Nickname" HorizontalAlignment="Left" Height="25" Margin="331,204,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label Content="Last Name" HorizontalAlignment="Left" Height="25" Margin="22,253,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="Preferred Jersey Number" HorizontalAlignment="Left" Height="25" Margin="331,253,0,0" VerticalAlignment="Top" Width="142"/>
+        <Label Content="Phone" HorizontalAlignment="Left" Height="25" Margin="22,302,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="Email" HorizontalAlignment="Left" Height="25" Margin="22,351,0,0" VerticalAlignment="Top" Width="57"/>
+        <Label Content="Confirm Email" HorizontalAlignment="Left" Height="25" Margin="331,351,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label Content="Password" HorizontalAlignment="Left" Height="25" Margin="22,402,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="Confirm password" HorizontalAlignment="Left" Height="25" Margin="331,402,0,0" VerticalAlignment="Top" Width="115"/>
 
     </Grid>
 </Window>
