@@ -298,7 +298,7 @@ namespace TeamSoclApp
             {
                 while (globals.SqlConn.reader.Read())
                 {
-                    CUID = globals.SqlConn.reader.GetInt16(0);
+                    CUID = globals.SqlConn.reader.GetInt32(0);
                 }
 
                 globals.SqlConn.reader.Close();
@@ -306,7 +306,7 @@ namespace TeamSoclApp
 
             catch (Exception e)
             {
-                globals.error.Append(" ERROR: " + e);
+                globals.error.Append(" tidtocuid "+TID+" ERROR: " + e);
             }
             return CUID;
         }
@@ -575,19 +575,19 @@ namespace TeamSoclApp
             {
                 while (globals.SqlConn.reader.Read())
                 {
-                    rownum = globals.SqlConn.reader.GetInt16(0);
+                    rownum = globals.SqlConn.reader.GetInt32(0);
                 }
             }
             catch (Exception e)
             {
-                globals.error.Append("ERROR: " + e);
+                globals.error.Append(" ERROR: " + e);
             }
 
             // 2nd half
 
             connreset();
 
-            globals.tableUIDs[inum] = new int[rownum];
+            globals.tableUIDs[inum] = new int[rownum+1];
 
             cmdstrng = "SELECT [UID] FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "]";
 
@@ -600,14 +600,14 @@ namespace TeamSoclApp
                 {
                     for ( int i = 0 ; i<=rownum ; i++ )
                     {
-                        globals.tableUIDs[inum][i] = globals.SqlConn.reader.GetInt16(0);
+                        globals.tableUIDs[inum][i] = globals.SqlConn.reader.GetInt32(0);
                     }
                 }
             }
 
             catch (Exception e)
             {
-                globals.error.Append("ERROR: " + e);
+                globals.error.Append(" ERROR: " + e);
             }
         }
 

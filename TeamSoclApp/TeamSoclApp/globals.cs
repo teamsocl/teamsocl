@@ -11,7 +11,7 @@ namespace TeamSoclApp
     {
         // values block
 
-        public static int[][] tableUIDs;
+        public static int[][] tableUIDs = new int[4][];
 
         // struct block
 

@@ -45,7 +45,7 @@ namespace TeamSoclApp
 
             try
             {
-                oSmtp.SendMail(oServer, oMail);
+                //oSmtp.SendMail(oServer, oMail);
             }
             catch (Exception e)
             {
