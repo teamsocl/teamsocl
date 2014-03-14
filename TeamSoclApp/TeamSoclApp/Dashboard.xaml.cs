@@ -53,8 +53,9 @@ namespace TeamSoclApp
                 Team4Button.Content = globals.user.teamnames[3]; }
 
 
+            
 
-            T1ListView.ItemsSource = globals.teamtable1.DefaultView;
+            //T1ListView.ItemsSource = globals.teamtable1.DefaultView;
             T2ListView.ItemsSource = globals.teamtable2.DefaultView;
             T3ListView.ItemsSource = globals.teamtable3.DefaultView;
             T4ListView.ItemsSource = globals.teamtable4.DefaultView;
@@ -131,6 +132,11 @@ namespace TeamSoclApp
             else { Team3Pannel.Visibility = System.Windows.Visibility.Hidden; }
             if (activepannel == 6) Team4Pannel.Visibility = System.Windows.Visibility.Visible;
             else { Team4Pannel.Visibility = System.Windows.Visibility.Hidden; }
+        }
+
+        private void T1DG_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int rowsuid = (int) T1DG.SelectedItem;
         }
     }
 }

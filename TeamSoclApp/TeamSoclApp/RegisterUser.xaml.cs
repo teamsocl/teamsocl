@@ -33,7 +33,7 @@ namespace TeamSoclApp
             else
             { MessageBox.Show("Your email was entered incorrectly!"); return; }
 
-            if (globals.SqlExec.is1in2row3(globals.player.EMail, "security", "email") == true)
+            if (globals.SqlExec.doesemailexist(globals.player.EMail) == true)
             { MessageBox.Show("This email already exists!"); return; }
 
             if (true) // if (inputvalidation(register_first_n.Text, 1) == true) 

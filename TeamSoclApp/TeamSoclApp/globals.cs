@@ -27,6 +27,7 @@ namespace TeamSoclApp
 
         public static SqlOverhead SqlConn = new SqlOverhead();
         public static SqlUnderbelly SqlExec = new SqlUnderbelly();
+        public static SqlLINQDataContext SqlLINQ = new SqlLINQDataContext();
 
         public static Emailer mailer = new Emailer();
         public static Messages messager = new Messages();

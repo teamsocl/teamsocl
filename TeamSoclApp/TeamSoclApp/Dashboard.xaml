@@ -15,17 +15,14 @@
         <StackPanel x:Name="Team1Pannel" HorizontalAlignment="Left" Height="385" Margin="100,75,0,0" VerticalAlignment="Top" Width="485">
             <Label Content="team1 data here"/>
             <Border x:Name="T1Border1" BorderBrush="Black" BorderThickness="5" Height="358">
-                <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0" Visibility="Visible">
-                    <ListView Name="T1ListView" Margin="0,0,123,0">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding first_name}"/>
-                                <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding last_name}"/>
-                                <GridViewColumn Header="Nick Name" DisplayMemberBinding="{Binding nickname}"/>
-                                <GridViewColumn Header="Roster #" DisplayMemberBinding="{Binding roster_num}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                <Border x:Name="T1Border2" BorderBrush="Black" BorderThickness="5" Margin="0,0,0,0" Visibility="Visible">
+                    <StackPanel>
+                        <DataGrid x:Name="T1DG" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" MouseDoubleClick="T1DG_MouseDoubleClick">
+                            
+                        </DataGrid>
+
+
+                    </StackPanel>
                 </Border>
             </Border>
         </StackPanel>

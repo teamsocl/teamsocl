@@ -16,7 +16,7 @@ namespace TeamSoclApp
             globals.SqlConn.conn.Open();
         }
 
-        // <MESSAGING>
+        // <MESSAGING> test
 
         public bool fillmr1()
         {
@@ -84,18 +84,19 @@ namespace TeamSoclApp
 
         public bool getcuruid() // gets current maximum User ID
         {
-            connreset();
-
-            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(uid) FROM [dbo].[users]", globals.SqlConn.conn);
-            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
 
             try
             {
-                while (globals.SqlConn.reader.Read())
-                {
-                    globals.UID = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
-                }
-                globals.SqlConn.reader.Close();
+                var query = (from stuff
+                             in globals.SqlLINQ.users
+                             select stuff.uid).Max();
+                globals.UID = (int) query;
+
+                //while (globals.SqlConn.reader.Read())
+                //{
+                //    globals.UID = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
+                //}
+                //globals.SqlConn.reader.Close();
             }
 
             catch (Exception e)
@@ -109,18 +110,14 @@ namespace TeamSoclApp
 
         public bool getcurtid() // gets current maximum Team ID
         {
-            connreset();
-
-            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(tid) FROM [dbo].[teams]", globals.SqlConn.conn);
-            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
-
             try
             {
-                while (globals.SqlConn.reader.Read())
-                {
-                    globals.TID = Convert.ToInt16(globals.SqlConn.reader.GetValue(0));
-                }
-                globals.SqlConn.reader.Close();
+                var query = (from stuff
+                             in globals.SqlLINQ.teams
+                             select stuff.tid).Max();
+
+                globals.TID = (int)query;
+
             }
 
             catch (Exception e)
@@ -128,7 +125,6 @@ namespace TeamSoclApp
                 globals.error.Append(" ERROR: " + e);
                 return false;
             }
-
             return true;
         }
 
@@ -136,7 +132,7 @@ namespace TeamSoclApp
         {
             connreset();
 
-            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(ejtid) FROM [dbo].[mr1]", globals.SqlConn.conn);
+            globals.SqlConn.cmd = new SqlCommand("SELECT MAX(mrid1) FROM [dbo].[mr1]", globals.SqlConn.conn);
             globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
 
             try
@@ -207,25 +203,32 @@ namespace TeamSoclApp
             return true;
         }
 
-        public bool is1in2row3(string value, string table, string rowname) // Is Var1 in Var2 Table, Row Var3
+        public bool doesemailexist(string value) // Is Var1 in Var2 Table, Row Var3
         {
             connreset();
 
             bool exists = false;
 
-            globals.SqlConn.cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["
-                + table + "] WHERE [" + rowname + "] = '" + value
-                + "'", globals.SqlConn.conn);
-            globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
+            //globals.SqlConn.cmd = new SqlCommand("SELECT COUNT(1) FROM [dbo].["
+            //    + table + "] WHERE [" + columnname + "] = '" + value
+            //    + "'", globals.SqlConn.conn);
+            //globals.SqlConn.reader = globals.SqlConn.cmd.ExecuteReader();
 
             try
             {
-                while (globals.SqlConn.reader.Read())
-                {
-                    if (globals.SqlConn.reader.GetInt32(0) >= 1) exists = true;
-                }
+                var query = (from stuff
+                             in globals.SqlLINQ.users
+                             where (value == stuff.email)
+                             select stuff).Count();
 
-                globals.SqlConn.reader.Close();
+                if (query >= 1) exists = true;
+
+                //while (globals.SqlConn.reader.Read())
+                //{
+                //    if (globals.SqlConn.reader.GetInt32(0) >= 1) exists = true;
+                //}
+
+                //globals.SqlConn.reader.Close();
             }
 
             catch (Exception e)
