@@ -520,7 +520,7 @@ namespace TeamSoclApp
         {
             connreset();
 
-            string cmdstrng = "SELECT [first_name],[last_name],[nickname],[roster_num] FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 0";
+            string cmdstrng = "SELECT [first_name],[last_name],[nickname],[roster_num] FROM [dbo].[z" + globals.user.teamnames[inum].ToString().ToLower() + "] WHERE [privacy] = 0 AND [approved] = 1";
             globals.SqlConn.dataadapter = new SqlDataAdapter(cmdstrng, globals.SqlConn.conn);
 
             try

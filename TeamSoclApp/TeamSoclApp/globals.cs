@@ -20,8 +20,6 @@ namespace TeamSoclApp
         public static UserPersona user = new UserPersona();
         public static Persona player = new Persona();
 
-        public static DataTable[] teamtables = new DataTable[4];
-        
         public static DataTable teamtable1 = new DataTable();
         public static DataTable teamtable2 = new DataTable();
         public static DataTable teamtable3 = new DataTable();
@@ -60,6 +58,12 @@ namespace TeamSoclApp
         {
             user = new UserPersona();
             player = new Persona();
+            teamtable1 = new DataTable();
+            teamtable2 = new DataTable();
+            teamtable3 = new DataTable();
+            teamtable4 = new DataTable();
+            tableUIDs = new int[4][];
+
         }
 
         public static void flushmessage()
