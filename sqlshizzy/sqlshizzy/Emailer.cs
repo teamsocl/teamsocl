@@ -3,52 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EASendMail; //add EASendMail namespace
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace TeamSoclApp
 {
     public class Emailer
     {
         public void emailer(string from, string to, string subject, string body)
+         
         {
 
 
-            SmtpMail oMail = new SmtpMail("TryIt");
-            SmtpClient oSmtp = new SmtpClient();
-
-            // Set sender email address, please change it to yours
-            oMail.From = from;
-
-            // Set recipient email address, please change it to yours
-            oMail.To = to;
-
-            // Set email subject
-            oMail.Subject = subject;
-
-            // Set email body
-            oMail.TextBody = body;
-
-            // Your SMTP server address
-            SmtpServer oServer = new SmtpServer("smtp.live.com");
-
-            // User and password for ESMTP authentication, if your server doesn't require
-            // User authentication, please remove the following codes.            
-            oServer.User = "teamsocl@outlook.com";
-            oServer.Password = "team12socl34";
-
-            // If your smtp server requires TLS connection, please add this line
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-
-            //If your smtp server requires implicit SSL connection on 465 port, please add this line
-            oServer.Port = 587;
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-
             try
             {
+                SmtpClient client = new SmtpClient("smtp.live.com", 587);
+                client.EnableSsl = true;
+                client.Timeout = 10000;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("teamsocl@outlook.com", "team12socl34");
+
+                MailMessage msg = new MailMessage();
+                msg.To.Add(to);
+                msg.From = new MailAddress(from);
+                msg.Subject = subject;
+                msg.Body = body;
                 Console.WriteLine("start to {0} send email ...", to);
-                oSmtp.SendMail(oServer, oMail);
+                client.Send(msg);
                 Console.WriteLine("email was sent successfully!");
+                //MessageBox.Show("Please check your E-Mail for a verification link.");
             }
+            
             catch (Exception ep)
             {
                 Console.WriteLine("failed to send email with the following error:");
